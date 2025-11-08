@@ -2,8 +2,8 @@ name: Update Eternity.yml
 
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    - cron: '0 * * * *'  # раз в час
+  workflow_dispatch:       # позволяет запускать вручную
 
 jobs:
   update-file:
@@ -13,13 +13,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PAT_TOKEN }}  # Используем секрет с твоим PAT
 
     - name: Download Eternity.yml from V2RayAggregator
       run: |
         curl -L -o Eternity.yml https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/Eternity.yml
 
-    - name: Commit changes
+    - name: Commit changes if any
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -27,7 +27,5 @@ jobs:
         git diff-index --quiet HEAD || git commit -m "Update Eternity.yml from V2RayAggregator"
 
     - name: Push changes
-      env:
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git HEAD:main
+        git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
