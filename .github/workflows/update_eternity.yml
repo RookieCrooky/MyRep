@@ -2,8 +2,8 @@ name: Update Eternity.yml
 
 on:
   schedule:
-    - cron: '0 * * * *'  # раз в час
-  workflow_dispatch:   # возможность запускать вручную
+    - cron: '0 * * * *'  # запускается каждый час
+  workflow_dispatch:       # позволяет запускать вручную
 
 jobs:
   update-file:
@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # важный момент для пуша
 
     - name: Download Eternity.yml from V2RayAggregator
       run: |
