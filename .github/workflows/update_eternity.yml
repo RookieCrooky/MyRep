@@ -2,7 +2,7 @@ name: Update servers.txt
 
 on:
   schedule:
-    - cron: '0 * * * *'  # запуск каждый час
+    - cron: '0 0 * * *'  # запуск каждый час
   workflow_dispatch:       # можно запустить вручную
 
 jobs:
