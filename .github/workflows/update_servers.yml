@@ -29,22 +29,22 @@ jobs:
       run: |
         python3 <<'EOF'
         import yaml, base64, urllib.parse, re, json
-        from collections import Counter
-
+        from collections import defaultdict
+    
         with open("servers.txt", "r", encoding="utf-8") as f:
             lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
-
+    
         proxies = []
-        names = Counter()
-
+        name_count = defaultdict(int)  # для уникализации имен
+    
         def unique_name(base):
-            """Генерирует уникальное имя узла, добавляя суффикс (2), (3) при дубликате"""
+            """Возвращает уникальное имя, добавляя (2), (3) при необходимости"""
             base = re.sub(r'[\r\n\t]+', '', base).strip() or "Node"
-            names[base] += 1
-            if names[base] == 1:
+            name_count[base] += 1
+            if name_count[base] == 1:
                 return base
-            return f"{base} ({names[base]})"
-
+            return f"{base} ({name_count[base]})"
+    
         def decode_ss(uri):
             try:
                 raw = uri[5:]
@@ -66,11 +66,12 @@ jobs:
                 }
             except Exception:
                 return None
-
+    
         for line in lines:
+            # Берем имя из комментария или задаем дефолтное
             name_part = urllib.parse.unquote(line.split("#", 1)[-1]) if "#" in line else ""
             name = unique_name(name_part)
-
+    
             if line.startswith("vless://"):
                 try:
                     part = line[len("vless://"):]
@@ -91,17 +92,19 @@ jobs:
                     }
                     proxies.append(proxy)
                 except Exception:
-                    pass
+                    continue
             elif line.startswith("vmess://"):
                 try:
                     raw = base64.b64decode(line[8:]).decode(errors="ignore")
                     node = json.loads(raw)
-                    node["name"] = name
+                    node_name = node.get("ps") or name
+                    node_name = unique_name(node_name)  # уникализируем
+                    node["name"] = node_name
                     node["type"] = "vmess"
                     node["udp"] = True
                     proxies.append(node)
                 except Exception:
-                    pass
+                    continue
             elif line.startswith("ss://"):
                 proxy = decode_ss(line)
                 if proxy:
@@ -126,8 +129,8 @@ jobs:
                     }
                     proxies.append(proxy)
                 except Exception:
-                    pass
-
+                    continue
+    
         config = {
             "proxies": proxies,
             "proxy-groups": [
@@ -143,6 +146,11 @@ jobs:
                     "type": "load-balance",
                     "strategy": "consistent-hashing",
                     "proxies": [p["name"] for p in proxies]
+                },
+                {
+                    "name": "Global ©️",
+                    "type": "select",
+                    "proxies": ["Auto", "Balance"]
                 }
             ],
             "rules": [
@@ -153,7 +161,7 @@ jobs:
                 "MATCH,Auto"
             ]
         }
-
+    
         with open("servers.yml", "w", encoding="utf-8") as f:
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
         EOF
