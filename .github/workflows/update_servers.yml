@@ -1,0 +1,157 @@
+name: Update and Convert servers.txt to Clash YAML
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # запуск раз в день (UTC)
+  workflow_dispatch:
+
+jobs:
+  update-servers:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.PAT_TOKEN }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3 python3-pip
+        pip install pyyaml
+
+    - name: Download servers.txt
+      run: |
+        curl -L -o servers.txt https://raw.githubusercontent.com/hans-thomas/v2ray-subscription/master/servers.txt
+
+    - name: Convert servers.txt → servers.yml
+      run: |
+        python3 <<'EOF'
+        import yaml, base64, urllib.parse, re
+
+        with open("servers.txt", "r", encoding="utf-8") as f:
+            lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
+
+        proxies = []
+
+        def decode_ss(uri):
+            try:
+                raw = uri[5:]
+                if '@' not in raw:
+                    decoded = base64.b64decode(raw).decode()
+                    method, rest = decoded.split(':', 1)
+                    password, server_port = rest.split('@', 1)
+                    server, port = server_port.split(':')
+                else:
+                    method_pass, server_port = raw.split('@', 1)
+                    method, password = method_pass.split(':', 1)
+                    server, port = server_port.split(':')
+                return {
+                    'type': 'ss',
+                    'server': server,
+                    'port': int(port),
+                    'cipher': method,
+                    'password': password
+                }
+            except Exception:
+                return None
+
+        for line in lines:
+            name = urllib.parse.unquote(line.split("#", 1)[-1]) if "#" in line else "Node"
+            if line.startswith("vless://"):
+                try:
+                    part = line[len("vless://"):]
+                    userinfo, rest = part.split("@", 1)
+                    uuid = userinfo.split(":")[0]
+                    server_port, *params = rest.split("?")
+                    server, port = server_port.split(":")
+                    qs = urllib.parse.parse_qs(params[0]) if params else {}
+                    proxy = {
+                        "name": name,
+                        "type": "vless",
+                        "server": server,
+                        "port": int(port),
+                        "uuid": uuid,
+                        "network": qs.get("type", ["tcp"])[0],
+                        "security": qs.get("security", ["none"])[0],
+                        "tls": "tls" in qs.get("security", ["none"])[0],
+                        "udp": True
+                    }
+                    proxies.append(proxy)
+                except Exception:
+                    pass
+            elif line.startswith("vmess://"):
+                try:
+                    raw = base64.b64decode(line[8:]).decode(errors="ignore")
+                    import json
+                    node = json.loads(raw)
+                    node["name"] = name
+                    node["type"] = "vmess"
+                    node["udp"] = True
+                    proxies.append(node)
+                except Exception:
+                    pass
+            elif line.startswith("ss://"):
+                proxy = decode_ss(line)
+                if proxy:
+                    proxy["name"] = name
+                    proxy["udp"] = True
+                    proxies.append(proxy)
+            elif line.startswith("trojan://"):
+                try:
+                    part = line[len("trojan://"):]
+                    password, rest = part.split("@", 1)
+                    server_port, *params = rest.split("?")
+                    server, port = server_port.split(":")
+                    qs = urllib.parse.parse_qs(params[0]) if params else {}
+                    proxy = {
+                        "name": name,
+                        "type": "trojan",
+                        "server": server,
+                        "port": int(port),
+                        "password": password,
+                        "sni": qs.get("sni", [""])[0],
+                        "udp": True
+                    }
+                    proxies.append(proxy)
+                except Exception:
+                    pass
+
+        config = {
+            "proxies": proxies,
+            "proxy-groups": [
+                {
+                    "name": "Auto",
+                    "type": "url-test",
+                    "url": "http://www.gstatic.com/generate_204",
+                    "interval": 600,
+                    "proxies": [p["name"] for p in proxies]
+                },
+                {
+                    "name": "Balance",
+                    "type": "load-balance",
+                    "strategy": "consistent-hashing",
+                    "proxies": [p["name"] for p in proxies]
+                }
+            ],
+            "rules": [
+                "DOMAIN-KEYWORD,kick,DIRECT",
+                "DOMAIN-SUFFIX,t.me,DIRECT",
+                "DOMAIN-SUFFIX,telegram.org,DIRECT",
+                "DOMAIN-SUFFIX,telegram.me,DIRECT",
+                "MATCH,Auto"
+            ]
+        }
+
+        with open("servers.yml", "w", encoding="utf-8") as f:
+            yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+        EOF
+
+    - name: Commit and Push changes
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add servers.txt servers.yml
+        git diff-index --quiet HEAD || git commit -m "Update servers.txt and generate servers.yml"
+        git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
