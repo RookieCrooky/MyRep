@@ -75,20 +75,59 @@ jobs:
                     return new_name
                 counter += 1
 
-        for line in lines:
+        def validate_proxy(proxy):
+            """Проверяет обязательные поля прокси"""
+            if not proxy:
+                return False
+            
+            # Обязательные поля для всех типов прокси
+            required_fields = ['name', 'type', 'server', 'port']
+            
+            for field in required_fields:
+                if field not in proxy:
+                    print(f"Пропущен прокси с отсутствующим полем '{field}': {proxy.get('name', 'Unknown')}")
+                    return False
+            
+            # Проверка типичных обязательных полей для конкретных типов
+            if proxy['type'] == 'vmess':
+                if 'uuid' not in proxy:
+                    return False
+            elif proxy['type'] == 'vless':
+                if 'uuid' not in proxy:
+                    return False
+            elif proxy['type'] == 'ss':
+                if 'cipher' not in proxy or 'password' not in proxy:
+                    return False
+            elif proxy['type'] == 'trojan':
+                if 'password' not in proxy:
+                    return False
+            
+            # Проверка валидности порта
+            try:
+                port = int(proxy['port'])
+                if port < 1 or port > 65535:
+                    return False
+            except (ValueError, TypeError):
+                return False
+            
+            return True
+
+        for i, line in enumerate(lines):
             # Извлекаем базовое имя
             if "#" in line:
                 base_name = urllib.parse.unquote(line.split("#", 1)[-1])
             else:
-                base_name = "Node"
+                base_name = f"Node-{i+1}"
             
             # Очищаем имя от лишних символов
             base_name = re.sub(r'[^\w\s\-\.]', '', base_name).strip()
             if not base_name:
-                base_name = "Node"
+                base_name = f"Node-{i+1}"
             
             # Создаем уникальное имя
             name = make_unique_name(base_name)
+
+            proxy = None
 
             if line.startswith("vless://"):
                 try:
@@ -109,26 +148,50 @@ jobs:
                         "tls": "tls" in qs.get("security", ["none"])[0],
                         "udp": True
                     }
-                    proxies.append(proxy)
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"Ошибка парсинга vless: {e}")
+                    continue
+
             elif line.startswith("vmess://"):
                 try:
                     raw = base64.b64decode(line[8:]).decode(errors="ignore")
                     import json
                     node = json.loads(raw)
-                    node["name"] = name
-                    node["type"] = "vmess"
-                    node["udp"] = True
-                    proxies.append(node)
-                except Exception:
-                    pass
+                    
+                    # Преобразуем vmess в стандартный формат
+                    proxy = {
+                        "name": name,
+                        "type": "vmess",
+                        "server": node.get("add", ""),
+                        "port": int(node.get("port", 0)),
+                        "uuid": node.get("id", ""),
+                        "alterId": int(node.get("aid", 0)),
+                        "cipher": node.get("scy", "auto"),
+                        "udp": True,
+                        "tls": node.get("tls") == "tls",
+                        "network": node.get("net", "tcp")
+                    }
+                    
+                    # Обработка ws path и host
+                    if node.get("net") == "ws":
+                        ws_opts = {}
+                        if node.get("path"):
+                            ws_opts["path"] = node.get("path")
+                        if node.get("host"):
+                            ws_opts["headers"] = {"Host": node.get("host")}
+                        if ws_opts:
+                            proxy["ws-opts"] = ws_opts
+                            
+                except Exception as e:
+                    print(f"Ошибка парсинга vmess: {e}")
+                    continue
+
             elif line.startswith("ss://"):
                 proxy = decode_ss(line)
                 if proxy:
                     proxy["name"] = name
                     proxy["udp"] = True
-                    proxies.append(proxy)
+
             elif line.startswith("trojan://"):
                 try:
                     part = line[len("trojan://"):]
@@ -145,9 +208,20 @@ jobs:
                         "sni": qs.get("sni", [""])[0],
                         "udp": True
                     }
-                    proxies.append(proxy)
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"Ошибка парсинга trojan: {e}")
+                    continue
+
+            # Валидация и добавление прокси
+            if proxy and validate_proxy(proxy):
+                proxies.append(proxy)
+            else:
+                print(f"Пропущен некорректный прокси: {name}")
+
+        # Убедимся, что есть хотя бы один валидный прокси
+        if not proxies:
+            print("Ошибка: не найдено ни одного валидного прокси")
+            exit(1)
 
         config = {
             "proxies": proxies,
@@ -178,7 +252,8 @@ jobs:
         with open("servers.yml", "w", encoding="utf-8") as f:
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
         
-        print(f"Обработано {len(proxies)} прокси")
+        print(f"Успешно обработано {len(proxies)} валидных прокси")
+        print(f"Пропущено {len(lines) - len(proxies)} некорректных прокси")
         EOF
 
     - name: Commit and Push changes
