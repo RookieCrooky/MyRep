@@ -24,7 +24,7 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add Eternity.yml
-        git diff-index --quiet HEAD || git commit -m "Update Eternity.yml from V2RayAggregator"
+        git diff-index --quiet HEAD || git commit -m "Update VLESS_servers.yml from v2ray-subscription"
 
     - name: Push changes
       run: |
