@@ -130,7 +130,6 @@ jobs:
                 except Exception as e:
                     print(f"Trojan parse error: {e} | {line}")
         
-            # Проверка обязательных полей перед добавлением
             if proxy and "server" in proxy and "port" in proxy:
                 proxies.append(proxy)
             elif proxy:
@@ -147,6 +146,13 @@ jobs:
                  "proxies": [p["name"] for p in proxies]},
                 {"name": "Global ©️", "type": "select", "proxies": ["Auto", "Balance"]}
             ],
+            "rules": [
+                "DOMAIN-KEYWORD,kick,DIRECT",
+                "DOMAIN-SUFFIX,t.me,DIRECT",
+                "DOMAIN-SUFFIX,telegram.org,DIRECT",
+                "DOMAIN-SUFFIX,telegram.me,DIRECT",
+                "MATCH,Auto"
+            ]
         }
         
         with open(output_file, "w", encoding="utf-8") as f:
@@ -154,6 +160,7 @@ jobs:
         
         print(f"servers.yml successfully created at {output_file}")
         PYTHON_EOF
+
         
             - name: Commit and Push changes
               run: |
