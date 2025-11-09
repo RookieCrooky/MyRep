@@ -238,6 +238,11 @@ jobs:
                     "type": "load-balance",
                     "strategy": "consistent-hashing",
                     "proxies": [p["name"] for p in proxies]
+                },
+                {
+                    "name": "Global ©️",
+                    "type": "select",
+                    "proxies": ["Balance", "Auto"]
                 }
             ],
             "rules": [
@@ -245,7 +250,7 @@ jobs:
                 "DOMAIN-SUFFIX,t.me,DIRECT",
                 "DOMAIN-SUFFIX,telegram.org,DIRECT",
                 "DOMAIN-SUFFIX,telegram.me,DIRECT",
-                "MATCH,Auto"
+                "MATCH,Global ©️"
             ]
         }
 
