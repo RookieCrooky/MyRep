@@ -1,167 +1,125 @@
-name: Update and Convert servers.txt to Clash YAML
+- name: Convert servers.txt → servers.yml
+  run: |
+    python3 - <<'PYTHON_EOF'
+import yaml, base64, urllib.parse, re, json, sys
 
-on:
-  schedule:
-    - cron: '0 0 * * *'  # запуск раз в день (UTC)
-  workflow_dispatch:
+try:
+    with open("servers.txt", "r", encoding="utf-8") as f:
+        lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
 
-jobs:
-  update-servers:
-    runs-on: ubuntu-latest
+    proxies = []
+    existing_names = set()
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.PAT_TOKEN }}
+    def make_unique_name(base):
+        base = re.sub(r'[\r\n\t]+', '', base).strip() or "Node"
+        if base not in existing_names:
+            existing_names.add(base)
+            return base
+        i = 2
+        while f"{base} ({i})" in existing_names:
+            i += 1
+        new_name = f"{base} ({i})"
+        existing_names.add(new_name)
+        return new_name
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y python3 python3-pip
-        pip install pyyaml
+    def decode_ss(uri):
+        try:
+            raw = uri[5:]
+            if '@' not in raw:
+                decoded = base64.b64decode(raw).decode()
+                method, rest = decoded.split(':', 1)
+                password, server_port = rest.split('@', 1)
+                server, port = server_port.split(':')
+            else:
+                method_pass, server_port = raw.split('@', 1)
+                method, password = method_pass.split(':', 1)
+                server, port = server_port.split(':')
+            return {'type': 'ss', 'server': server, 'port': int(port), 'cipher': method, 'password': password}
+        except:
+            return None
 
-    - name: Download servers.txt
-      run: |
-        curl -L -o servers.txt https://raw.githubusercontent.com/hans-thomas/v2ray-subscription/master/servers.txt
+    for line in lines:
+        name_part = urllib.parse.unquote(line.split("#", 1)[-1]) if "#" in line else ""
+        name = make_unique_name(name_part)
 
-    - name: Convert servers.txt → servers.yml
-      run: |
-        python3 <<'EOF'
-        import yaml, base64, urllib.parse, re, json
-        from collections import defaultdict
-    
-        with open("servers.txt", "r", encoding="utf-8") as f:
-            lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
-    
-        proxies = []
-        name_count = defaultdict(int)  # для уникализации имен
-    
-        def unique_name(base):
-            """Возвращает уникальное имя, добавляя (2), (3) при необходимости"""
-            base = re.sub(r'[\r\n\t]+', '', base).strip() or "Node"
-            name_count[base] += 1
-            if name_count[base] == 1:
-                return base
-            return f"{base} ({name_count[base]})"
-    
-        def decode_ss(uri):
+        if line.startswith("vless://"):
             try:
-                raw = uri[5:]
-                if '@' not in raw:
-                    decoded = base64.b64decode(raw).decode()
-                    method, rest = decoded.split(':', 1)
-                    password, server_port = rest.split('@', 1)
-                    server, port = server_port.split(':')
-                else:
-                    method_pass, server_port = raw.split('@', 1)
-                    method, password = method_pass.split(':', 1)
-                    server, port = server_port.split(':')
-                return {
-                    'type': 'ss',
-                    'server': server,
-                    'port': int(port),
-                    'cipher': method,
-                    'password': password
-                }
-            except Exception:
-                return None
-    
-        for line in lines:
-            # Берем имя из комментария или задаем дефолтное
-            name_part = urllib.parse.unquote(line.split("#", 1)[-1]) if "#" in line else ""
-            name = unique_name(name_part)
-    
-            if line.startswith("vless://"):
-                try:
-                    part = line[len("vless://"):]
-                    userinfo, rest = part.split("@", 1)
-                    uuid = userinfo.split(":")[0]
-                    server_port, *params = rest.split("?")
-                    server, port = server_port.split(":")
-                    qs = urllib.parse.parse_qs(params[0]) if params else {}
-                    proxy = {
-                        "name": name,
-                        "type": "vless",
-                        "server": server,
-                        "port": int(port),
-                        "uuid": uuid,
-                        "network": qs.get("type", ["tcp"])[0],
-                        "security": qs.get("security", ["none"])[0],
-                        "udp": True
-                    }
-                    proxies.append(proxy)
-                except Exception:
-                    continue
-            elif line.startswith("vmess://"):
-                try:
-                    raw = base64.b64decode(line[8:]).decode(errors="ignore")
-                    node = json.loads(raw)
-                    node_name = node.get("ps") or name
-                    node_name = unique_name(node_name)  # уникализируем
-                    node["name"] = node_name
-                    node["type"] = "vmess"
-                    node["udp"] = True
-                    proxies.append(node)
-                except Exception:
-                    continue
-            elif line.startswith("ss://"):
-                proxy = decode_ss(line)
-                if proxy:
-                    proxy["name"] = name
-                    proxy["udp"] = True
-                    proxies.append(proxy)
-            elif line.startswith("trojan://"):
-                try:
-                    part = line[len("trojan://"):]
-                    password, rest = part.split("@", 1)
-                    server_port, *params = rest.split("?")
-                    server, port = server_port.split(":")
-                    qs = urllib.parse.parse_qs(params[0]) if params else {}
-                    proxy = {
-                        "name": name,
-                        "type": "trojan",
-                        "server": server,
-                        "port": int(port),
-                        "password": password,
-                        "sni": qs.get("sni", [""])[0],
-                        "udp": True
-                    }
-                    proxies.append(proxy)
-                except Exception:
-                    continue
-    
-        config = {
-            "proxies": proxies,
-            "proxy-groups": [
-                {
-                    "name": "Auto",
-                    "type": "url-test",
-                    "url": "http://www.gstatic.com/generate_204",
-                    "interval": 600,
-                    "proxies": [p["name"] for p in proxies]
-                },
-                {
-                    "name": "Balance",
-                    "type": "load-balance",
-                    "strategy": "consistent-hashing",
-                    "proxies": [p["name"] for p in proxies]
-                },
-                {
-                    "name": "Global ©️",
-                    "type": "select",
-                    "proxies": ["Auto", "Balance"]
-                }
-            ],
-            "rules": [
-                "DOMAIN-KEYWORD,kick,DIRECT",
-                "DOMAIN-SUFFIX,t.me,DIRECT",
-                "DOMAIN-SUFFIX,telegram.org,DIRECT",
-                "DOMAIN-SUFFIX,telegram.me,DIRECT",
-                "MATCH,Auto"
-            ]
-        }
-    
-        with open("servers.yml", "w", encoding="utf-8") as f:
-            yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-        EOF
+                part = line[len("vless://"):]
+                userinfo, rest = part.split("@", 1)
+                uuid = userinfo.split(":")[0]
+                server_port, *params = rest.split("?")
+                server, port = server_port.split(":")
+                qs = urllib.parse.parse_qs(params[0]) if params else {}
+                proxies.append({
+                    "name": name,
+                    "type": "vless",
+                    "server": server,
+                    "port": int(port),
+                    "uuid": uuid,
+                    "network": qs.get("type", ["tcp"])[0],
+                    "security": qs.get("security", ["none"])[0],
+                    "udp": True
+                })
+            except Exception as e:
+                print(f"VLESS error: {e}", file=sys.stderr)
+        elif line.startswith("vmess://"):
+            try:
+                raw = base64.b64decode(line[8:]).decode(errors="ignore")
+                node = json.loads(raw)
+                node_name = node.get("ps") or name
+                node_name = make_unique_name(node_name)
+                node["name"] = node_name
+                node["type"] = "vmess"
+                node["udp"] = True
+                proxies.append(node)
+            except Exception as e:
+                print(f"VMESS error: {e}", file=sys.stderr)
+        elif line.startswith("ss://"):
+            proxy = decode_ss(line)
+            if proxy:
+                proxy["name"] = name
+                proxy["udp"] = True
+                proxies.append(proxy)
+        elif line.startswith("trojan://"):
+            try:
+                part = line[len("trojan://"):]
+                password, rest = part.split("@", 1)
+                server_port, *params = rest.split("?")
+                server, port = server_port.split(":")
+                qs = urllib.parse.parse_qs(params[0]) if params else {}
+                proxies.append({
+                    "name": name,
+                    "type": "trojan",
+                    "server": server,
+                    "port": int(port),
+                    "password": password,
+                    "sni": qs.get("sni", [""])[0],
+                    "udp": True
+                })
+            except Exception as e:
+                print(f"Trojan error: {e}", file=sys.stderr)
+
+    config = {
+        "proxies": proxies,
+        "proxy-groups": [
+            {"name": "Auto", "type": "url-test", "url": "http://www.gstatic.com/generate_204", "interval": 600,
+             "proxies": [p["name"] for p in proxies]},
+            {"name": "Balance", "type": "load-balance", "strategy": "consistent-hashing",
+             "proxies": [p["name"] for p in proxies]},
+            {"name": "Global ©️", "type": "select", "proxies": ["Auto", "Balance"]}
+        ],
+        "rules": [
+            "DOMAIN-KEYWORD,kick,DIRECT",
+            "DOMAIN-SUFFIX,t.me,DIRECT",
+            "DOMAIN-SUFFIX,telegram.org,DIRECT",
+            "DOMAIN-SUFFIX,telegram.me,DIRECT",
+            "MATCH,Auto"
+        ]
+    }
+
+    with open("servers.yml", "w", encoding="utf-8") as f:
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+except Exception as e:
+    print(f"Script failed: {e}", file=sys.stderr)
+    sys.exit(1)
+PYTHON_EOF
