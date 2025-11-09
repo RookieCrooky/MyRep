@@ -17,7 +17,7 @@ jobs:
 
     - name: Download Eternity.yml from V2RayAggregator
       run: |
-        curl -L -o Eternity.yml https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/Eternity.yml
+        curl -L -o VLESS_servers.yml https://raw.githubusercontent.com/hans-thomas/v2ray-subscription/refs/heads/master/servers.txt
 
     - name: Commit changes if any
       run: |
