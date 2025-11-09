@@ -53,40 +53,32 @@ proxies:
   security: none
   tls: false
   udp: true
-- add: 91.134.8.92
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: yichueng.org
-  id: 03fcc618-b93d-6796-6aed-8a38c975d581
-  net: ws
-  path: linkvws
-  port: '443'
-  ps: 🦀20@oneclickvpnkeys
-  scy: auto
-  sni: yichueng.org
-  tls: tls
+- name: Node-15
   type: vmess
-  v: '2'
-  name: Node
+  server: 91.134.8.92
+  port: 443
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  alterId: 0
+  cipher: auto
   udp: true
-- add: 91.99.185.216
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: 7bd6a1ea-a220-4f1c-afed-6cfb8ab96ad9
-  net: ws
-  path: /
-  port: '20086'
-  ps: 🖲️24@oneclickvpnkeys
-  scy: auto
-  sni: ''
-  tls: ''
+  tls: true
+  network: ws
+  ws-opts:
+    path: linkvws
+    headers:
+      Host: yichueng.org
+- name: Node-16
   type: vmess
-  v: '2'
-  name: Node (1)
+  server: 91.99.185.216
+  port: 20086
+  uuid: 7bd6a1ea-a220-4f1c-afed-6cfb8ab96ad9
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: false
+  network: ws
+  ws-opts:
+    path: /
 - name: 15oneclickvpnkeys
   type: vless
   server: 185.68.244.86
@@ -132,40 +124,34 @@ proxies:
   security: none
   tls: false
   udp: true
-- add: 91.134.8.101
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: fapeng.org
-  id: 03fcc618-b93d-6796-6aed-8a38c975d581
-  net: ws
-  path: linkvws
-  port: '443'
-  ps: 🪢14@oneclickvpnkeys
-  scy: auto
-  sni: fapeng.org
-  tls: tls
+- name: Node-28
   type: vmess
-  v: '2'
-  name: Node (2)
+  server: 91.134.8.101
+  port: 443
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  alterId: 0
+  cipher: auto
   udp: true
-- add: 141.94.155.229
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: pelang.org
-  id: 03fcc618-b93d-6796-6aed-8a38c975d581
-  net: ws
-  path: linkvws
-  port: '443'
-  ps: 🖲️9@oneclickvpnkeys
-  scy: auto
-  sni: pelang.org
-  tls: tls
+  tls: true
+  network: ws
+  ws-opts:
+    path: linkvws
+    headers:
+      Host: fapeng.org
+- name: Node-29
   type: vmess
-  v: '2'
-  name: Node (3)
+  server: 141.94.155.229
+  port: 443
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: true
+  network: ws
+  ws-opts:
+    path: linkvws
+    headers:
+      Host: pelang.org
 - name: V2rayNGVPN  کانفیگ رایگان (4)
   type: vless
   server: 166.1.131.4
@@ -283,40 +269,26 @@ proxies:
   security: reality
   tls: false
   udp: true
-- add: 82.197.69.131
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: 5a89386a-827b-4f54-8778-2f1b5122c6ef
-  net: tcp
-  path: ''
-  port: '39674'
-  ps: ♟️6@oneclickvpnkeys
-  scy: auto
-  sni: ''
-  tls: ''
+- name: Node-52
   type: vmess
-  v: '2'
-  name: Node (4)
+  server: 82.197.69.131
+  port: 39674
+  uuid: 5a89386a-827b-4f54-8778-2f1b5122c6ef
+  alterId: 0
+  cipher: auto
   udp: true
-- add: 62.146.235.193
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: cfc5a87f-3c13-4e25-b556-176cdd6b5c6a
-  net: tcp
-  path: ''
-  port: '28011'
-  ps: 🛞99@oneclickvpnkeys
-  scy: auto
-  sni: ''
-  tls: ''
+  tls: false
+  network: tcp
+- name: Node-53
   type: vmess
-  v: '2'
-  name: Node (5)
+  server: 62.146.235.193
+  port: 28011
+  uuid: cfc5a87f-3c13-4e25-b556-176cdd6b5c6a
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: false
+  network: tcp
 - name: 19oneclickvpnkeys
   type: vless
   server: 83.222.23.81
@@ -335,23 +307,16 @@ proxies:
   security: reality
   tls: false
   udp: true
-- add: 165.140.216.141
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
-  net: tcp
-  path: ''
-  port: '443'
-  ps: ♟️10@oneclickvpnkeys
-  scy: auto
-  sni: ''
-  tls: ''
+- name: Node-56
   type: vmess
-  v: '2'
-  name: Node (6)
+  server: 165.140.216.141
+  port: 443
+  uuid: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: false
+  network: tcp
 - name: v2ray_configs_poolPolandWarsaw Praga-Północping110.57ms
   type: vless
   server: m22a.vip784.com
@@ -386,40 +351,32 @@ proxies:
   password: BxceQaOe
   sni: ''
   udp: true
-- add: 209.126.84.189
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: 209.126.84.189
-  id: 2c981164-9b93-4bca-94ff-b78d3f8498d7
-  net: ws
-  path: /vmessws
-  port: '443'
-  ps: 🪢57@oneclickvpnkeys
-  scy: auto
-  sni: ''
-  tls: ''
+- name: Node-66
   type: vmess
-  v: '2'
-  name: Node (7)
+  server: 209.126.84.189
+  port: 443
+  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
+  alterId: 0
+  cipher: auto
   udp: true
-- add: 154.201.76.172
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: 496cec71-a0fd-4f25-bba1-cba9e9d5a52f
-  net: ws
-  path: /
-  port: '20521'
-  ps: ♟️12@oneclickvpnkeys
-  scy: auto
-  sni: ''
-  tls: ''
+  tls: false
+  network: ws
+  ws-opts:
+    path: /vmessws
+    headers:
+      Host: 209.126.84.189
+- name: Node-67
   type: vmess
-  v: '2'
-  name: Node (8)
+  server: 154.201.76.172
+  port: 20521
+  uuid: 496cec71-a0fd-4f25-bba1-cba9e9d5a52f
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: false
+  network: ws
+  ws-opts:
+    path: /
 - name: 42oneclickvpnkeys
   type: vless
   server: 77.91.74.189
@@ -438,23 +395,18 @@ proxies:
   security: none
   tls: false
   udp: true
-- add: 47.86.85.95
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: a50e42f2-d578-4cb9-8d38-a9a382ef5534
-  net: ws
-  path: /arki?ed=2048
-  port: '8934'
-  ps: 🇭🇰HK-47.86.85.95-5591
-  scy: auto
-  sni: ''
-  tls: ''
+- name: Node-70
   type: vmess
-  v: '2'
-  name: Node (9)
+  server: 47.86.85.95
+  port: 8934
+  uuid: a50e42f2-d578-4cb9-8d38-a9a382ef5534
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: false
+  network: ws
+  ws-opts:
+    path: /arki?ed=2048
 - name: 28oneclickvpnkeys (1)
   type: trojan
   server: 203.198.122.129
@@ -507,23 +459,20 @@ proxies:
   security: tls
   tls: true
   udp: true
-- add: 141.94.155.224
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: fapeng.org
-  id: 03fcc618-b93d-6796-6aed-8a38c975d581
-  net: ws
-  path: linkvws
-  port: '443'
-  ps: 🖲️18@oneclickvpnkeys
-  scy: auto
-  sni: fapeng.org
-  tls: tls
+- name: Node-83
   type: vmess
-  v: '2'
-  name: Node (10)
+  server: 141.94.155.224
+  port: 443
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: true
+  network: ws
+  ws-opts:
+    path: linkvws
+    headers:
+      Host: fapeng.org
 - name: V2rayNGVPN  کانفیگ رایگان (10)
   type: vless
   server: 188.253.19.234
@@ -542,23 +491,16 @@ proxies:
   security: reality
   tls: false
   udp: true
-- add: arda101.ardaserver.site
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: 571cd4a3-e2af-4bab-a6f5-3b5906afc111
-  net: tcp
-  path: ''
-  port: '34167'
-  ps: '@V2rayNGVPN <= کانفیگ رایگان'
-  scy: auto
-  sni: ''
-  tls: ''
+- name: Node-86
   type: vmess
-  v: '2'
-  name: Node (11)
+  server: arda101.ardaserver.site
+  port: 34167
+  uuid: 571cd4a3-e2af-4bab-a6f5-3b5906afc111
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: false
+  network: tcp
 - name: V2rayNGVPN  کانفیگ رایگان (11)
   type: vless
   server: usa32.clearorbitllc.com
@@ -595,23 +537,18 @@ proxies:
   security: none
   tls: false
   udp: true
-- add: 8.218.140.27
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: 9297b311-b73a-4332-9016-bb25cbe475ee
-  net: ws
-  path: /arki?ed=2048
-  port: '13589'
-  ps: 🇭🇰HK-8.218.140.27-5571
-  scy: auto
-  sni: ''
-  tls: ''
+- name: Node-97
   type: vmess
-  v: '2'
-  name: Node (12)
+  server: 8.218.140.27
+  port: 13589
+  uuid: 9297b311-b73a-4332-9016-bb25cbe475ee
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: false
+  network: ws
+  ws-opts:
+    path: /arki?ed=2048
 - name: V2rayNGVPN  کانفیگ رایگان (13)
   type: vless
   server: pl.nnvpn.io
@@ -621,23 +558,18 @@ proxies:
   security: reality
   tls: false
   udp: true
-- add: 8.218.140.27
-  aid: '0'
-  alpn: ''
-  fp: ''
-  host: ''
-  id: d54c887a-7d47-4dc8-995d-df7687ef0494
-  net: ws
-  path: /arki?ed=2048
-  port: '32876'
-  ps: 🇭🇰HK-8.218.140.27-5580
-  scy: auto
-  sni: ''
-  tls: ''
+- name: Node-100
   type: vmess
-  v: '2'
-  name: Node (13)
+  server: 8.218.140.27
+  port: 32876
+  uuid: d54c887a-7d47-4dc8-995d-df7687ef0494
+  alterId: 0
+  cipher: auto
   udp: true
+  tls: false
+  network: ws
+  ws-opts:
+    path: /arki?ed=2048
 proxy-groups:
 - name: Auto
   type: url-test
@@ -650,15 +582,15 @@ proxy-groups:
   - 179.61.219.170
   - 8oneclickvpnkeys
   - Telegramconfig_proxy (3)
-  - Node
-  - Node (1)
+  - Node-15
+  - Node-16
   - 15oneclickvpnkeys
   - 32oneclickvpnkeys
   - 95.164.45.122
   - 17oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (2)
-  - Node (2)
-  - Node (3)
+  - Node-28
+  - Node-29
   - V2rayNGVPN  کانفیگ رایگان (4)
   - 28oneclickvpnkeys
   - I 1139 Outline_Vpn free
@@ -672,37 +604,37 @@ proxy-groups:
   - 5oneclickvpnkeys (1)
   - 3oneclickvpnkeys
   - 1oneclickvpnkeys (1)
-  - Node (4)
-  - Node (5)
+  - Node-52
+  - Node-53
   - 19oneclickvpnkeys
   - 4oneclickvpnkeys
-  - Node (6)
+  - Node-56
   - v2ray_configs_poolPolandWarsaw Praga-Północping110.57ms
   - Telegramconfig_proxy (4)
   - 31oneclickvpnkeys
   - 32oneclickvpnkeys (1)
-  - Node (7)
-  - Node (8)
+  - Node-66
+  - Node-67
   - 42oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (6)
-  - Node (9)
+  - Node-70
   - 28oneclickvpnkeys (1)
   - v2ray_configs_poolKazakhstanAlmatyping123.72ms
   - Telegramconfig_proxy (5)
   - 9oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (8)
   - V2rayNGVPN  کانفیگ رایگان (9)
-  - Node (10)
+  - Node-83
   - V2rayNGVPN  کانفیگ رایگان (10)
   - I 1141 Outline_Vpn free
-  - Node (11)
+  - Node-86
   - V2rayNGVPN  کانفیگ رایگان (11)
   - V2rayNGVPN  کانفیگ رایگان (12)
   - 64oneclickvpnkeys
   - 179.61.219.170 (1)
-  - Node (12)
+  - Node-97
   - V2rayNGVPN  کانفیگ رایگان (13)
-  - Node (13)
+  - Node-100
 - name: Balance
   type: load-balance
   strategy: consistent-hashing
@@ -713,15 +645,15 @@ proxy-groups:
   - 179.61.219.170
   - 8oneclickvpnkeys
   - Telegramconfig_proxy (3)
-  - Node
-  - Node (1)
+  - Node-15
+  - Node-16
   - 15oneclickvpnkeys
   - 32oneclickvpnkeys
   - 95.164.45.122
   - 17oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (2)
-  - Node (2)
-  - Node (3)
+  - Node-28
+  - Node-29
   - V2rayNGVPN  کانفیگ رایگان (4)
   - 28oneclickvpnkeys
   - I 1139 Outline_Vpn free
@@ -735,37 +667,37 @@ proxy-groups:
   - 5oneclickvpnkeys (1)
   - 3oneclickvpnkeys
   - 1oneclickvpnkeys (1)
-  - Node (4)
-  - Node (5)
+  - Node-52
+  - Node-53
   - 19oneclickvpnkeys
   - 4oneclickvpnkeys
-  - Node (6)
+  - Node-56
   - v2ray_configs_poolPolandWarsaw Praga-Północping110.57ms
   - Telegramconfig_proxy (4)
   - 31oneclickvpnkeys
   - 32oneclickvpnkeys (1)
-  - Node (7)
-  - Node (8)
+  - Node-66
+  - Node-67
   - 42oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (6)
-  - Node (9)
+  - Node-70
   - 28oneclickvpnkeys (1)
   - v2ray_configs_poolKazakhstanAlmatyping123.72ms
   - Telegramconfig_proxy (5)
   - 9oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (8)
   - V2rayNGVPN  کانفیگ رایگان (9)
-  - Node (10)
+  - Node-83
   - V2rayNGVPN  کانفیگ رایگان (10)
   - I 1141 Outline_Vpn free
-  - Node (11)
+  - Node-86
   - V2rayNGVPN  کانفیگ رایگان (11)
   - V2rayNGVPN  کانفیگ رایگان (12)
   - 64oneclickvpnkeys
   - 179.61.219.170 (1)
-  - Node (12)
+  - Node-97
   - V2rayNGVPN  کانفیگ رایگان (13)
-  - Node (13)
+  - Node-100
 rules:
 - DOMAIN-KEYWORD,kick,DIRECT
 - DOMAIN-SUFFIX,t.me,DIRECT
