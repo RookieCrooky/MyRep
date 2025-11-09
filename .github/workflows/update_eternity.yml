@@ -1,4 +1,4 @@
-name: Update Eternity.yml
+name: Update servers.txt
 
 on:
   schedule:
@@ -15,7 +15,7 @@ jobs:
       with:
         token: ${{ secrets.PAT_TOKEN }}  # Используем секрет с твоим PAT
 
-    - name: Download Eternity.yml from V2RayAggregator
+    - name: Download VLESS_servers.yml from v2ray-subscription
       run: |
         curl -L -o VLESS_servers.yml https://raw.githubusercontent.com/hans-thomas/v2ray-subscription/refs/heads/master/servers.txt
 
@@ -23,7 +23,7 @@ jobs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add Eternity.yml
+        git add servers.txt
         git diff-index --quiet HEAD || git commit -m "Update VLESS_servers.yml from v2ray-subscription"
 
     - name: Push changes
