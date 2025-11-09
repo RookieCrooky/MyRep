@@ -698,9 +698,14 @@ proxy-groups:
   - Node-97
   - V2rayNGVPN  کانفیگ رایگان (13)
   - Node-100
+- name: Global ©️
+  type: select
+  proxies:
+  - Balance
+  - Auto
 rules:
 - DOMAIN-KEYWORD,kick,DIRECT
 - DOMAIN-SUFFIX,t.me,DIRECT
 - DOMAIN-SUFFIX,telegram.org,DIRECT
 - DOMAIN-SUFFIX,telegram.me,DIRECT
-- MATCH,Auto
+- MATCH,Global ©️
