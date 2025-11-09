@@ -28,12 +28,18 @@ jobs:
     - name: Convert servers.txt → servers.yml
       run: |
         python3 <<'EOF'
-        import yaml, base64, urllib.parse, re
+        import yaml, base64, urllib.parse, re, json
+        from collections import Counter
 
         with open("servers.txt", "r", encoding="utf-8") as f:
             lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
 
         proxies = []
+        names = Counter()
+
+        def unique_name(name):
+            names[name] += 1
+            return f"{name} ({names[name]})" if names[name] > 1 else name
 
         def decode_ss(uri):
             try:
@@ -59,6 +65,8 @@ jobs:
 
         for line in lines:
             name = urllib.parse.unquote(line.split("#", 1)[-1]) if "#" in line else "Node"
+            name = unique_name(name)
+
             if line.startswith("vless://"):
                 try:
                     part = line[len("vless://"):]
@@ -75,7 +83,6 @@ jobs:
                         "uuid": uuid,
                         "network": qs.get("type", ["tcp"])[0],
                         "security": qs.get("security", ["none"])[0],
-                        "tls": "tls" in qs.get("security", ["none"])[0],
                         "udp": True
                     }
                     proxies.append(proxy)
@@ -84,7 +91,6 @@ jobs:
             elif line.startswith("vmess://"):
                 try:
                     raw = base64.b64decode(line[8:]).decode(errors="ignore")
-                    import json
                     node = json.loads(raw)
                     node["name"] = name
                     node["type"] = "vmess"
@@ -147,11 +153,3 @@ jobs:
         with open("servers.yml", "w", encoding="utf-8") as f:
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
         EOF
-
-    - name: Commit and Push changes
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add servers.txt servers.yml
-        git diff-index --quiet HEAD || git commit -m "Update servers.txt and generate servers.yml"
-        git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
