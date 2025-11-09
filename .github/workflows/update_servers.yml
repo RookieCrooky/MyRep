@@ -1,6 +1,33 @@
-- name: Convert servers.txt → servers.yml
-  run: |
-    python3 - <<'PYTHON_EOF'
+name: Update and Convert servers.txt to Clash YAML
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # запуск раз в день (UTC)
+  workflow_dispatch:
+
+jobs:
+  update-servers:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.PAT_TOKEN }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3 python3-pip
+        pip install pyyaml
+
+    - name: Download servers.txt
+      run: |
+        curl -L -o servers.txt https://raw.githubusercontent.com/hans-thomas/v2ray-subscription/master/servers.txt
+
+    - name: Convert servers.txt → servers.yml
+      run: |
+        python3 - <<'PYTHON_EOF'
 import yaml, base64, urllib.parse, re, json, sys
 
 try:
@@ -119,6 +146,7 @@ try:
 
     with open("servers.yml", "w", encoding="utf-8") as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+
 except Exception as e:
     print(f"Script failed: {e}", file=sys.stderr)
     sys.exit(1)
