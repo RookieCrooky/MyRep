@@ -28,10 +28,14 @@ jobs:
     - name: Convert servers.txt → servers.yml
       run: |
         python3 - <<'PYTHON_EOF'
-        import yaml, base64, urllib.parse, re, json, sys
+        import yaml, base64, urllib.parse, re, json, os, sys
+        
+        workspace = os.environ.get("GITHUB_WORKSPACE", ".")
+        servers_file = os.path.join(workspace, "servers.txt")
+        output_file = os.path.join(workspace, "servers.yml")
         
         try:
-            with open("servers.txt", "r", encoding="utf-8") as f:
+            with open(servers_file, "r", encoding="utf-8") as f:
                 lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
         
             proxies = []
@@ -62,7 +66,8 @@ jobs:
                         method, password = method_pass.split(':', 1)
                         server, port = server_port.split(':')
                     return {'type': 'ss', 'server': server, 'port': int(port), 'cipher': method, 'password': password}
-                except:
+                except Exception as e:
+                    print(f"SS decode error: {e}", file=sys.stderr)
                     return None
         
             for line in lines:
@@ -126,6 +131,8 @@ jobs:
                     except Exception as e:
                         print(f"Trojan error: {e}", file=sys.stderr)
         
+            print(f"Total proxies parsed: {len(proxies)}")
+        
             config = {
                 "proxies": proxies,
                 "proxy-groups": [
@@ -144,8 +151,9 @@ jobs:
                 ]
             }
         
-            with open("servers.yml", "w", encoding="utf-8") as f:
+            with open(output_file, "w", encoding="utf-8") as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+            print(f"servers.yml successfully created at: {output_file}")
         
         except Exception as e:
             print(f"Script failed: {e}", file=sys.stderr)
