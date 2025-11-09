@@ -33,14 +33,16 @@ jobs:
 
         with open("servers.txt", "r", encoding="utf-8") as f:
             lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
-
+        
         proxies = []
         names = Counter()
-
-        def unique_name(name):
-            names[name] += 1
-            return f"{name} ({names[name]})" if names[name] > 1 else name
-
+        
+        def unique_name(base):
+            """Генерирует уникальное имя узла"""
+            base = re.sub(r'[\r\n\t]+', '', base).strip() or "Node"
+            names[base] += 1
+            return f"{base} ({names[base]})" if names[base] > 1 else base
+        
         def decode_ss(uri):
             try:
                 raw = uri[5:]
@@ -62,11 +64,11 @@ jobs:
                 }
             except Exception:
                 return None
-
+        
         for line in lines:
-            name = urllib.parse.unquote(line.split("#", 1)[-1]) if "#" in line else "Node"
-            name = unique_name(name)
-
+            name_part = urllib.parse.unquote(line.split("#", 1)[-1]) if "#" in line else ""
+            name = unique_name(name_part)
+        
             if line.startswith("vless://"):
                 try:
                     part = line[len("vless://"):]
@@ -123,7 +125,7 @@ jobs:
                     proxies.append(proxy)
                 except Exception:
                     pass
-
+        
         config = {
             "proxies": proxies,
             "proxy-groups": [
@@ -149,7 +151,7 @@ jobs:
                 "MATCH,Auto"
             ]
         }
-
+        
         with open("servers.yml", "w", encoding="utf-8") as f:
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-        EOF
+        
