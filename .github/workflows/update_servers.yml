@@ -2,7 +2,7 @@ name: Update and Convert servers.txt to Clash YAML
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # запуск раз в день (UTC)
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -27,14 +27,18 @@ jobs:
 
     - name: Convert servers.txt → servers.yml
       run: |
-        python3 <<'EOF'
-        import yaml, base64, urllib.parse, re, json
-
-        with open("servers.txt", "r", encoding="utf-8") as f:
+        python3 - <<'PYTHON_EOF'
+        import yaml, base64, urllib.parse, re, json, os, sys
+        
+        workspace = os.environ.get("GITHUB_WORKSPACE", ".")
+        servers_file = os.path.join(workspace, "servers.txt")
+        output_file = os.path.join(workspace, "servers.yml")
+        
+        with open(servers_file, "r", encoding="utf-8") as f:
             lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
         
         proxies = []
-        name_count = {}  # для уникализации имен
+        name_count = {}
         
         def make_unique_name(base):
             base = re.sub(r'[\r\n\t]+', '', base).strip() or "Node"
@@ -45,8 +49,10 @@ jobs:
         def decode_ss(uri):
             try:
                 raw = uri[5:]
+                if '#' in raw:
+                    raw, _ = raw.split('#', 1)
                 if '@' not in raw:
-                    decoded = base64.b64decode(raw).decode()
+                    decoded = base64.b64decode(raw + '=' * (-len(raw) % 4)).decode()
                     method, rest = decoded.split(':', 1)
                     password, server_port = rest.split('@', 1)
                     server, port = server_port.split(':')
@@ -54,19 +60,16 @@ jobs:
                     method_pass, server_port = raw.split('@', 1)
                     method, password = method_pass.split(':', 1)
                     server, port = server_port.split(':')
-                return {
-                    'type': 'ss',
-                    'server': server,
-                    'port': int(port),
-                    'cipher': method,
-                    'password': password
-                }
-            except Exception:
+                return {'type': 'ss', 'server': server, 'port': int(port), 'cipher': method, 'password': password}
+            except Exception as e:
+                print(f"SS decode error: {e} | {uri}")
                 return None
         
         for line in lines:
             base_name = urllib.parse.unquote(line.split("#", 1)[-1]) if "#" in line else "Node"
             name = make_unique_name(base_name)
+        
+            proxy = None
         
             if line.startswith("vless://"):
                 try:
@@ -87,25 +90,27 @@ jobs:
                         "tls": "tls" in qs.get("security", ["none"])[0],
                         "udp": True
                     }
-                    proxies.append(proxy)
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"VLESS parse error: {e} | {line}")
+        
             elif line.startswith("vmess://"):
                 try:
-                    raw = base64.b64decode(line[8:]).decode(errors="ignore")
+                    raw = base64.b64decode(line[8:] + '=' * (-len(line[8:]) % 4)).decode(errors="ignore")
                     node = json.loads(raw)
-                    node["name"] = name
+                    node_name = node.get("ps") or name
+                    node["name"] = node_name
                     node["type"] = "vmess"
                     node["udp"] = True
-                    proxies.append(node)
-                except Exception:
-                    pass
+                    proxy = node
+                except Exception as e:
+                    print(f"VMESS parse error: {e} | {line}")
+        
             elif line.startswith("ss://"):
                 proxy = decode_ss(line)
                 if proxy:
                     proxy["name"] = name
                     proxy["udp"] = True
-                    proxies.append(proxy)
+        
             elif line.startswith("trojan://"):
                 try:
                     part = line[len("trojan://"):]
@@ -122,50 +127,38 @@ jobs:
                         "sni": qs.get("sni", [""])[0],
                         "udp": True
                     }
-                    proxies.append(proxy)
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"Trojan parse error: {e} | {line}")
+        
+            # Проверка обязательных полей перед добавлением
+            if proxy and "server" in proxy and "port" in proxy:
+                proxies.append(proxy)
+            elif proxy:
+                print(f"Skipped proxy missing server/port: {line}")
+        
+        print(f"Total valid proxies: {len(proxies)}")
         
         config = {
             "proxies": proxies,
             "proxy-groups": [
-                {
-                    "name": "Auto",
-                    "type": "url-test",
-                    "url": "http://www.gstatic.com/generate_204",
-                    "interval": 600,
-                    "proxies": [p["name"] for p in proxies]
-                },
-                {
-                    "name": "Balance",
-                    "type": "load-balance",
-                    "strategy": "consistent-hashing",
-                    "proxies": [p["name"] for p in proxies]
-                },
-                {
-                    "name": "Global ©️",
-                    "type": "select",
-                    "proxies": ["Auto", "Balance"]
-                }
+                {"name": "Auto", "type": "url-test", "url": "http://www.gstatic.com/generate_204", "interval": 600,
+                 "proxies": [p["name"] for p in proxies]},
+                {"name": "Balance", "type": "load-balance", "strategy": "consistent-hashing",
+                 "proxies": [p["name"] for p in proxies]},
+                {"name": "Global ©️", "type": "select", "proxies": ["Auto", "Balance"]}
             ],
-            "rules": [
-                "DOMAIN-KEYWORD,kick,DIRECT",
-                "DOMAIN-SUFFIX,t.me,DIRECT",
-                "DOMAIN-SUFFIX,telegram.org,DIRECT",
-                "DOMAIN-SUFFIX,telegram.me,DIRECT",
-                "MATCH,Auto"
-            ]
         }
         
-        with open("servers.yml", "w", encoding="utf-8") as f:
+        with open(output_file, "w", encoding="utf-8") as f:
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-
-        EOF
-
-    - name: Commit and Push changes
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add servers.txt servers.yml
-        git diff-index --quiet HEAD || git commit -m "Update servers.txt and generate servers.yml"
-        git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+        
+        print(f"servers.yml successfully created at {output_file}")
+        PYTHON_EOF
+        
+            - name: Commit and Push changes
+              run: |
+                git config user.name "github-actions[bot]"
+                git config user.email "github-actions[bot]@users.noreply.github.com"
+                git add servers.txt servers.yml
+                git diff-index --quiet HEAD || git commit -m "Update servers.txt and generate servers.yml"
+                git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
