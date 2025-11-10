@@ -698,11 +698,76 @@ proxy-groups:
   - Node-97
   - V2rayNGVPN  کانفیگ رایگان (13)
   - Node-100
+- name: Fallback
+  type: fallback
+  url: https://www.gstatic.com/generate_204
+  interval: 300
+  proxies:
+  - V2rayNGVPN  کانفیگ رایگان
+  - Telegramconfig_proxy (1)
+  - Telegramconfig_proxy (2)
+  - 179.61.219.170
+  - 8oneclickvpnkeys
+  - Telegramconfig_proxy (3)
+  - Node-15
+  - Node-16
+  - 15oneclickvpnkeys
+  - 32oneclickvpnkeys
+  - 95.164.45.122
+  - 17oneclickvpnkeys
+  - V2rayNGVPN  کانفیگ رایگان (2)
+  - Node-28
+  - Node-29
+  - V2rayNGVPN  کانفیگ رایگان (4)
+  - 28oneclickvpnkeys
+  - I 1139 Outline_Vpn free
+  - 15oneclickvpnkeys (1)
+  - 62oneclickvpnkeys
+  - 45.88.183.158
+  - 45.88.183.164
+  - 23oneclickvpnkeys
+  - 45.88.183.164 (1)
+  - V2rayNGVPN  کانفیگ رایگان (5)
+  - 5oneclickvpnkeys (1)
+  - 3oneclickvpnkeys
+  - 1oneclickvpnkeys (1)
+  - Node-52
+  - Node-53
+  - 19oneclickvpnkeys
+  - 4oneclickvpnkeys
+  - Node-56
+  - v2ray_configs_poolPolandWarsaw Praga-Północping110.57ms
+  - Telegramconfig_proxy (4)
+  - 31oneclickvpnkeys
+  - 32oneclickvpnkeys (1)
+  - Node-66
+  - Node-67
+  - 42oneclickvpnkeys
+  - V2rayNGVPN  کانفیگ رایگان (6)
+  - Node-70
+  - 28oneclickvpnkeys (1)
+  - v2ray_configs_poolKazakhstanAlmatyping123.72ms
+  - Telegramconfig_proxy (5)
+  - 9oneclickvpnkeys
+  - V2rayNGVPN  کانفیگ رایگان (8)
+  - V2rayNGVPN  کانفیگ رایگان (9)
+  - Node-83
+  - V2rayNGVPN  کانفیگ رایگان (10)
+  - I 1141 Outline_Vpn free
+  - Node-86
+  - V2rayNGVPN  کانفیگ رایگان (11)
+  - V2rayNGVPN  کانفیگ رایگان (12)
+  - 64oneclickvpnkeys
+  - 179.61.219.170 (1)
+  - Node-97
+  - V2rayNGVPN  کانفیگ رایگان (13)
+  - Node-100
 - name: Global ©️
   type: select
   proxies:
   - Balance
   - Auto
+  - Fallback
 rules:
 - DOMAIN-KEYWORD,kick,DIRECT
 - DOMAIN-SUFFIX,t.me,DIRECT
