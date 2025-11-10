@@ -241,8 +241,8 @@ jobs:
                 },
                 {
                   "name": "Fallback"
-                  "type": fallback
-                  "url": https://www.gstatic.com/generate_204
+                  "type": "fallback"
+                  "url": "https://www.gstatic.com/generate_204"
                   "interval": 300
                   "proxies": [p["name"] for p in proxies]
                 },
