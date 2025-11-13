@@ -1,23 +1,14 @@
 proxies:
 - name: V2rayNGVPN  کانفیگ رایگان
   type: vless
-  server: 104.18.82.55
+  server: 162.159.152.53
   port: 443
   uuid: 29187857-4a1f-4d1e-88eb-0016771e0dbb
   network: ws
   security: tls
   tls: true
   udp: true
-- name: Telegramconfig_proxy (1)
-  type: vless
-  server: 91.98.229.73
-  port: 20569
-  uuid: TelegramChannel%3Adaredevill_404
-  network: xhttp#Telegram:@config_proxy 🔥
-  security: none
-  tls: false
-  udp: true
-- name: Telegramconfig_proxy (2)
+- name: Telegramconfig_proxy
   type: vless
   server: 185.251.81.253
   port: 2096
@@ -26,12 +17,30 @@ proxies:
   security: tls
   tls: true
   udp: true
-- name: 179.61.219.170
+- name: V2rayNGVPN  کانفیگ رایگان (1)
   type: vless
-  server: 179.61.219.170
-  port: 22934
-  uuid: 0cd276a5-4501-413a-acf8-b51c54894f02
-  network: tcp#179.61.219.170
+  server: 104.18.82.55
+  port: 443
+  uuid: 29187857-4a1f-4d1e-88eb-0016771e0dbb
+  network: ws
+  security: tls
+  tls: true
+  udp: true
+- name: V2rayNGVPN  کانفیگ رایگان (2)
+  type: vless
+  server: 27.50.48.8
+  port: 443
+  uuid: 602b380a-9fdf-4425-bc07-aae9a95cfc4b
+  network: ws
+  security: tls
+  tls: true
+  udp: true
+- name: V2rayNGVPN  کانفیگ رایگان (3)
+  type: vless
+  server: 95.164.45.122
+  port: 50268
+  uuid: 005a5104-82c5-4a6b-b023-6e621ec9071d
+  network: tcp#@V2rayNGVPN <= کانفیگ رایگان
   security: none
   tls: false
   udp: true
@@ -44,16 +53,97 @@ proxies:
   security: reality
   tls: false
   udp: true
-- name: Telegramconfig_proxy (3)
+- name: Telegramconfig_proxy (1)
   type: vless
-  server: 81.91.179.17
+  server: speedtest.org
+  port: 443
+  uuid: c7158ca6-7c6c-4701-bf7d-df0f98a9ca33
+  network: ws
+  security: tls
+  tls: true
+  udp: true
+- name: 77oneclickvpnkeys
+  type: vless
+  server: ir11.drinfoo.com
+  port: 890
+  uuid: 8cfd1eb5-81ab-41d7-9b63-191af959344e
+  network: ws
+  security: tls
+  tls: true
+  udp: true
+- name: V2rayNGVPN  کانفیگ رایگان (4)
+  type: vless
+  server: 172.66.47.156
+  port: 443
+  uuid: 89b3cbba-e6ac-485a-9481-976a0415eab9
+  network: ws
+  security: tls
+  tls: true
+  udp: true
+- name: I 1139 Outline_Vpn free
+  type: vless
+  server: 84.246.85.198
   port: 8880
-  uuid: ca2e23cb-2d9a-4812-d713-506f91d3735f
-  network: ws#Telegram:@config_proxy 💦
+  uuid: df0680ca-e43c-498d-ed86-8e196eedd012
+  network: grpc#I 1139 (@Outline_Vpn) free
   security: none
   tls: false
   udp: true
-- name: Node-15
+- name: 17oneclickvpnkeys
+  type: vless
+  server: 91.99.177.36
+  port: 443
+  uuid: 77dacbb9-eb50-487e-adc7-f1f2cb4cb19c
+  network: ws#🪫17@oneclickvpnkeys
+  security: none
+  tls: false
+  udp: true
+- name: Telegramconfig_proxy (2)
+  type: vless
+  server: 35.158.29.116
+  port: 22224
+  uuid: 05519058-d2ac-4f28-9e4a-2b2a1386749e
+  network: ws
+  security: tls
+  tls: true
+  udp: true
+- name: Telegramconfig_proxy (3)
+  type: vless
+  server: 91.98.232.154
+  port: 7046
+  uuid: 523d563e-1e5d-467e-95f7-786a78c16c53
+  network: xhttp
+  security: reality
+  tls: false
+  udp: true
+- name: 15oneclickvpnkeys
+  type: vless
+  server: 185.68.244.86
+  port: 42545
+  uuid: 7c8cf438-8d5a-4ce9-bc1c-88345a545f2f
+  network: tcp#🍂15@oneclickvpnkeys
+  security: none
+  tls: false
+  udp: true
+- name: 95.164.45.122
+  type: vless
+  server: 95.164.45.122
+  port: 50268
+  uuid: 005a5104-82c5-4a6b-b023-6e621ec9071d
+  network: tcp#95.164.45.122
+  security: none
+  tls: false
+  udp: true
+- name: Telegramconfig_proxy (4)
+  type: vless
+  server: 151.101.3.8
+  port: 80
+  uuid: caa3fd00-6e5e-4209-bbe5-d8fcc82582ac
+  network: xhttp#Telegram:@config_proxy 🔥
+  security: none
+  tls: false
+  udp: true
+- name: Node-17
   type: vmess
   server: 91.134.8.92
   port: 443
@@ -67,399 +157,16 @@ proxies:
     path: linkvws
     headers:
       Host: yichueng.org
-- name: Node-16
-  type: vmess
-  server: 91.99.185.216
-  port: 20086
-  uuid: 7bd6a1ea-a220-4f1c-afed-6cfb8ab96ad9
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: false
-  network: ws
-  ws-opts:
-    path: /
-- name: 15oneclickvpnkeys
-  type: vless
-  server: 185.68.244.86
-  port: 42545
-  uuid: 7c8cf438-8d5a-4ce9-bc1c-88345a545f2f
-  network: tcp#🍂15@oneclickvpnkeys
-  security: none
-  tls: false
-  udp: true
-- name: 32oneclickvpnkeys
-  type: vless
-  server: 95.164.45.122
-  port: 50268
-  uuid: 005a5104-82c5-4a6b-b023-6e621ec9071d
-  network: tcp#🖲️32@oneclickvpnkeys
-  security: none
-  tls: false
-  udp: true
-- name: 95.164.45.122
-  type: vless
-  server: 95.164.45.122
-  port: 50268
-  uuid: 005a5104-82c5-4a6b-b023-6e621ec9071d
-  network: tcp#95.164.45.122
-  security: none
-  tls: false
-  udp: true
-- name: 17oneclickvpnkeys
-  type: vless
-  server: 91.99.177.36
-  port: 443
-  uuid: 77dacbb9-eb50-487e-adc7-f1f2cb4cb19c
-  network: ws#🪫17@oneclickvpnkeys
-  security: none
-  tls: false
-  udp: true
-- name: V2rayNGVPN  کانفیگ رایگان (2)
-  type: vless
-  server: 95.164.45.122
-  port: 50268
-  uuid: 005a5104-82c5-4a6b-b023-6e621ec9071d
-  network: tcp#@V2rayNGVPN <= کانفیگ رایگان
-  security: none
-  tls: false
-  udp: true
-- name: Node-28
-  type: vmess
-  server: 91.134.8.101
-  port: 443
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: true
-  network: ws
-  ws-opts:
-    path: linkvws
-    headers:
-      Host: fapeng.org
-- name: Node-29
-  type: vmess
-  server: 141.94.155.229
-  port: 443
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: true
-  network: ws
-  ws-opts:
-    path: linkvws
-    headers:
-      Host: pelang.org
-- name: V2rayNGVPN  کانفیگ رایگان (4)
-  type: vless
-  server: 166.1.131.4
-  port: 443
-  uuid: 40730d97-ffa7-1108-2c53-761516eb5fda
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: 28oneclickvpnkeys
-  type: vless
-  server: 95.164.45.27
-  port: 8880
-  uuid: df0680ca-e43c-498d-ed86-8e196eedd012
-  network: grpc#🍂28@oneclickvpnkeys
-  security: none
-  tls: false
-  udp: true
-- name: I 1139 Outline_Vpn free
-  type: vless
-  server: 84.246.85.198
-  port: 8880
-  uuid: df0680ca-e43c-498d-ed86-8e196eedd012
-  network: grpc#I 1139 (@Outline_Vpn) free
-  security: none
-  tls: false
-  udp: true
-- name: 15oneclickvpnkeys (1)
-  type: vless
-  server: 83.222.23.81
-  port: 38065
-  uuid: 4b9063e0-3288-44e9-9aac-80fbfce323a0
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: 62oneclickvpnkeys
-  type: vless
-  server: all.tellmethetrue.shop
-  port: 443
-  uuid: e4824193-4f54-453b-d037-88368e85ef0e
-  network: grpc
-  security: tls
-  tls: true
-  udp: true
-- name: 45.88.183.158
-  type: vless
-  server: 45.88.183.158
-  port: 44629
-  uuid: d3daa900-0377-4575-9ebc-c4d88cb8486c
-  network: tcp#45.88.183.158
-  security: none
-  tls: false
-  udp: true
-- name: 45.88.183.164
-  type: vless
-  server: 45.88.183.164
-  port: 49355
-  uuid: ef246c6f-6e7d-4286-af33-5485544b0ba8
-  network: tcp#45.88.183.164
-  security: none
-  tls: false
-  udp: true
-- name: 23oneclickvpnkeys
-  type: vless
-  server: 176.223.66.8
-  port: 39948
-  uuid: 2558c819-1363-4859-8fb9-f8cb104d49d2
-  network: tcp#🍉23@oneclickvpnkeys
-  security: none
-  tls: false
-  udp: true
-- name: 45.88.183.164 (1)
-  type: vless
-  server: 45.88.183.164
-  port: 49355
-  uuid: ef246c6f-6e7d-4286-af33-5485544b0ba8
-  network: tcp#45.88.183.164
-  security: none
-  tls: false
-  udp: true
-- name: V2rayNGVPN  کانفیگ رایگان (5)
-  type: vless
-  server: 193.23.210.40
-  port: 443
-  uuid: f1ba3023-59df-4295-81d9-43a12146b2f5
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: 5oneclickvpnkeys (1)
-  type: vless
-  server: 45.159.23.10
-  port: 443
-  uuid: 40730d97-ffa7-1108-2c53-761516eb5fda
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: 3oneclickvpnkeys
-  type: vless
-  server: 185.77.221.10
-  port: 443
-  uuid: 40730d97-ffa7-1108-2c53-761516eb5fda
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: 1oneclickvpnkeys (1)
-  type: vless
-  server: 193.56.20.10
-  port: 993
-  uuid: 40730d97-ffa7-1108-2c53-761516eb5fda
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: Node-52
-  type: vmess
-  server: 82.197.69.131
-  port: 39674
-  uuid: 5a89386a-827b-4f54-8778-2f1b5122c6ef
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: false
-  network: tcp
-- name: Node-53
-  type: vmess
-  server: 62.146.235.193
-  port: 28011
-  uuid: cfc5a87f-3c13-4e25-b556-176cdd6b5c6a
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: false
-  network: tcp
-- name: 19oneclickvpnkeys
-  type: vless
-  server: 83.222.23.81
-  port: 38065
-  uuid: 4b9063e0-3288-44e9-9aac-80fbfce323a0
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: 4oneclickvpnkeys
-  type: vless
-  server: 193.31.127.10
-  port: 993
-  uuid: 40730d97-ffa7-1108-2c53-761516eb5fda
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: Node-56
-  type: vmess
-  server: 165.140.216.141
-  port: 443
-  uuid: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: false
-  network: tcp
-- name: v2ray_configs_poolPolandWarsaw Praga-Północping110.57ms
-  type: vless
-  server: m22a.vip784.com
-  port: 33801
-  uuid: f65e636d-c532-4e6c-b428-015402fd276c
-  network: tcp#👉🆔@v2ray_configs_pool📡🇵🇱®️Poland©️Warsaw (Praga-Północ)🅿️ping:110.57ms
-  security: none
-  tls: false
-  udp: true
-- name: Telegramconfig_proxy (4)
-  type: vless
-  server: 45.82.251.145
-  port: 80
-  uuid: 401374e6-df77-41fb-f638-dad8184f175b
-  network: grpc
-  security: none
-  tls: false
-  udp: true
-- name: 31oneclickvpnkeys
-  type: vless
-  server: 109.123.236.161
-  port: 42692
-  uuid: c4ccf00e-72c6-4fd9-b7ce-f625a835539f
-  network: tcp#♟️31@oneclickvpnkeys
-  security: none
-  tls: false
-  udp: true
-- name: 32oneclickvpnkeys (1)
-  type: trojan
-  server: 58.152.53.3
-  port: 443
-  password: BxceQaOe
-  sni: ''
-  udp: true
-- name: Node-66
-  type: vmess
-  server: 209.126.84.189
-  port: 443
-  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: false
-  network: ws
-  ws-opts:
-    path: /vmessws
-    headers:
-      Host: 209.126.84.189
-- name: Node-67
-  type: vmess
-  server: 154.201.76.172
-  port: 20521
-  uuid: 496cec71-a0fd-4f25-bba1-cba9e9d5a52f
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: false
-  network: ws
-  ws-opts:
-    path: /
-- name: 42oneclickvpnkeys
-  type: vless
-  server: 77.91.74.189
-  port: 28495
-  uuid: 7e296434-2d17-48d3-928d-19eaa34aecb1
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: V2rayNGVPN  کانفیگ رایگان (6)
-  type: vless
-  server: 45.82.251.145
-  port: 80
-  uuid: 401374e6-df77-41fb-f638-dad8184f175b
-  network: grpc#@V2rayNGVPN <= کانفیگ رایگان
-  security: none
-  tls: false
-  udp: true
-- name: Node-70
-  type: vmess
-  server: 47.86.85.95
-  port: 8934
-  uuid: a50e42f2-d578-4cb9-8d38-a9a382ef5534
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: false
-  network: ws
-  ws-opts:
-    path: /arki?ed=2048
-- name: 28oneclickvpnkeys (1)
-  type: trojan
-  server: 203.198.122.129
-  port: 443
-  password: BxceQaOe
-  sni: ''
-  udp: true
-- name: v2ray_configs_poolKazakhstanAlmatyping123.72ms
-  type: vless
-  server: 176.120.72.63
-  port: 38339
-  uuid: 481c5606-b586-44d7-bc2e-d8ef30d67f62
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
 - name: Telegramconfig_proxy (5)
   type: vless
-  server: 171.22.114.88
-  port: 8880
-  uuid: df0680ca-e43c-498d-ed86-8e196eedd012
-  network: grpc#Telegram:@config_proxy 💦
-  security: none
-  tls: false
-  udp: true
-- name: 9oneclickvpnkeys
-  type: vless
-  server: 72.167.241.253
-  port: 2096
-  uuid: 2456f90c-5183-476d-b069-16ae74ce120f
+  server: 162.159.152.53
+  port: 443
+  uuid: 29187857-4a1f-4d1e-88eb-0016771e0dbb
   network: ws
   security: tls
   tls: true
   udp: true
-- name: V2rayNGVPN  کانفیگ رایگان (8)
-  type: vless
-  server: 638968239153205239.london-blkaft-aaaw.info
-  port: 8880
-  uuid: df0680ca-e43c-498d-ed86-8e196eedd012
-  network: grpc#@V2rayNGVPN <= کانفیگ رایگان
-  security: none
-  tls: false
-  udp: true
-- name: V2rayNGVPN  کانفیگ رایگان (9)
-  type: vless
-  server: ovhwuxian.pai50288.uk
-  port: 8443
-  uuid: 57ba2ab1-a283-42eb-82ee-dc3561a805b8
-  network: ws
-  security: tls
-  tls: true
-  udp: true
-- name: Node-83
+- name: Node-20
   type: vmess
   server: 141.94.155.224
   port: 443
@@ -473,44 +180,48 @@ proxies:
     path: linkvws
     headers:
       Host: fapeng.org
-- name: V2rayNGVPN  کانفیگ رایگان (10)
-  type: vless
-  server: 188.253.19.234
-  port: 444
-  uuid: b63444c6-3fdd-40f3-a8a5-41e36ebda1cc
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: I 1141 Outline_Vpn free
-  type: vless
-  server: 38.54.122.118
-  port: 443
-  uuid: 9f4b9824-df02-49c3-a976-d4f9a31f81fe
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: Node-86
+- name: Node-25
   type: vmess
-  server: arda101.ardaserver.site
-  port: 34167
-  uuid: 571cd4a3-e2af-4bab-a6f5-3b5906afc111
+  server: 141.94.155.229
+  port: 443
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
   alterId: 0
   cipher: auto
   udp: true
-  tls: false
-  network: tcp
-- name: V2rayNGVPN  کانفیگ رایگان (11)
+  tls: true
+  network: ws
+  ws-opts:
+    path: linkvws
+    headers:
+      Host: pelang.org
+- name: Telegramconfig_proxy (7)
   type: vless
-  server: usa32.clearorbitllc.com
-  port: 443
-  uuid: 9daf8f3e-089b-4989-9502-dd3d727edb6c
-  network: tcp
-  security: reality
+  server: 194.182.79.240
+  port: 22726
+  uuid: cab42adf-7b3a-4e39-9f4f-f8c08b940c69
+  network: grpc
+  security: none
   tls: false
   udp: true
-- name: V2rayNGVPN  کانفیگ رایگان (12)
+- name: Telegramconfig_proxy (8)
+  type: vless
+  server: 94.232.247.61
+  port: 8880
+  uuid: df0680ca-e43c-498d-ed86-8e196eedd012
+  network: grpc#Telegram:@config_proxy 💦
+  security: none
+  tls: false
+  udp: true
+- name: Telegramconfig_proxy (9)
+  type: vless
+  server: 141.98.169.145
+  port: 8880
+  uuid: 15d114ee-c814-47c7-bd12-fab0c7a0128e
+  network: grpc#Telegram:@config_proxy 🔥
+  security: none
+  tls: false
+  udp: true
+- name: V2rayNGVPN  کانفیگ رایگان (6)
   type: vless
   server: 104.26.6.89
   port: 2053
@@ -519,15 +230,301 @@ proxies:
   security: tls
   tls: true
   udp: true
-- name: 64oneclickvpnkeys
+- name: 32oneclickvpnkeys
   type: vless
-  server: 77.91.68.70
-  port: 55983
-  uuid: f667a096-5231-4cfb-8759-92bb32473139
+  server: 95.164.45.122
+  port: 50268
+  uuid: 005a5104-82c5-4a6b-b023-6e621ec9071d
+  network: tcp#🖲️32@oneclickvpnkeys
+  security: none
+  tls: false
+  udp: true
+- name: 9oneclickvpnkeys
+  type: vless
+  server: 72.167.241.253
+  port: 2096
+  uuid: 2456f90c-5183-476d-b069-16ae74ce120f
+  network: ws
+  security: tls
+  tls: true
+  udp: true
+- name: 45.88.183.158
+  type: vless
+  server: 45.88.183.158
+  port: 44629
+  uuid: d3daa900-0377-4575-9ebc-c4d88cb8486c
+  network: tcp#45.88.183.158
+  security: none
+  tls: false
+  udp: true
+- name: 45.88.183.156
+  type: vless
+  server: 45.88.183.156
+  port: 12794
+  uuid: 08704c01-7edb-454a-98a2-328ccb9936fa
+  network: tcp#45.88.183.156
+  security: none
+  tls: false
+  udp: true
+- name: Node-42
+  type: vmess
+  server: 165.140.216.141
+  port: 443
+  uuid: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  network: tcp
+- name: Node-46
+  type: vmess
+  server: 209.126.84.189
+  port: 443
+  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  network: ws
+  ws-opts:
+    path: /vmessws
+    headers:
+      Host: 209.126.84.189
+- name: Node-48
+  type: vmess
+  server: 62.146.235.193
+  port: 28011
+  uuid: cfc5a87f-3c13-4e25-b556-176cdd6b5c6a
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  network: tcp
+- name: Node-49
+  type: vmess
+  server: 104.16.120.250
+  port: 443
+  uuid: bf67437e-6c90-45ca-abc2-c7240a5ce2aa
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: true
+  network: ws
+  ws-opts:
+    path: /eisasqa
+    headers:
+      Host: foxlux.fovi.tk
+- name: Node-51
+  type: vmess
+  server: 154.201.76.172
+  port: 20521
+  uuid: 496cec71-a0fd-4f25-bba1-cba9e9d5a52f
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  network: ws
+  ws-opts:
+    path: /
+- name: 45.88.183.164
+  type: vless
+  server: 45.88.183.164
+  port: 49355
+  uuid: ef246c6f-6e7d-4286-af33-5485544b0ba8
+  network: tcp#45.88.183.164
+  security: none
+  tls: false
+  udp: true
+- name: Node-57
+  type: vmess
+  server: 82.197.69.131
+  port: 39674
+  uuid: 5a89386a-827b-4f54-8778-2f1b5122c6ef
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  network: tcp
+- name: 62oneclickvpnkeys
+  type: trojan
+  server: 51.89.128.93
+  port: 44004
+  password: 6b5b50ff-7798-40dc-9888-b4dd581e5435
+  sni: joss.dus.biz.id#🏅62@oneclickvpnkeys
+  udp: true
+- name: 15oneclickvpnkeys (1)
+  type: vless
+  server: 83.222.23.81
+  port: 38065
+  uuid: 4b9063e0-3288-44e9-9aac-80fbfce323a0
   network: tcp
   security: reality
   tls: false
   udp: true
+- name: 38.47.176.134
+  type: vless
+  server: 38.47.176.134
+  port: 59967
+  uuid: a19fd311-c343-4b54-9ca3-fe6dcd84c0fc
+  network: tcp#38.47.176.134
+  security: none
+  tls: false
+  udp: true
+- name: 19oneclickvpnkeys
+  type: vless
+  server: 83.222.23.81
+  port: 38065
+  uuid: 4b9063e0-3288-44e9-9aac-80fbfce323a0
+  network: tcp
+  security: reality
+  tls: false
+  udp: true
+- name: v2ray_configs_poolKazakhstanAlmatyping123.72ms
+  type: vless
+  server: 176.120.72.63
+  port: 38339
+  uuid: 481c5606-b586-44d7-bc2e-d8ef30d67f62
+  network: tcp
+  security: reality
+  tls: false
+  udp: true
+- name: Telegramconfig_proxy (10)
+  type: vless
+  server: 45.82.251.145
+  port: 80
+  uuid: 401374e6-df77-41fb-f638-dad8184f175b
+  network: grpc
+  security: none
+  tls: false
+  udp: true
+- name: Telegramconfig_proxy (11)
+  type: vless
+  server: 35.77.121.181
+  port: 59483
+  uuid: 47d7d5eb-55e6-4085-a155-bdf3fcc428f6
+  network: grpc#Telegram:@config_proxy 🔥
+  security: none
+  tls: false
+  udp: true
+- name: Telegramconfig_proxy (12)
+  type: vless
+  server: 16.184.30.39
+  port: 59483
+  uuid: 47d7d5eb-55e6-4085-a155-bdf3fcc428f6
+  network: grpc#Telegram:@config_proxy 🔥
+  security: none
+  tls: false
+  udp: true
+- name: Node-72
+  type: vmess
+  server: 47.244.120.197
+  port: 36703
+  uuid: 45b83519-9c4f-4052-a11b-02e017b636d4
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  network: ws
+  ws-opts:
+    path: /arki?ed=2048
+- name: Telegramconfig_proxy (13)
+  type: vless
+  server: 207.148.105.169
+  port: 80
+  uuid: bed5834d-7597-4af7-990e-abe1a3604557
+  network: ws#Telegram:@config_proxy 🔥
+  security: none
+  tls: false
+  udp: true
+- name: V2rayNGVPN  کانفیگ رایگان (7)
+  type: vless
+  server: 45.82.251.145
+  port: 80
+  uuid: 401374e6-df77-41fb-f638-dad8184f175b
+  network: grpc#@V2rayNGVPN <= کانفیگ رایگان
+  security: none
+  tls: false
+  udp: true
+- name: 28oneclickvpnkeys
+  type: trojan
+  server: 203.198.122.129
+  port: 443
+  password: BxceQaOe
+  sni: ''
+  udp: true
+- name: 23oneclickvpnkeys
+  type: vless
+  server: 176.223.66.8
+  port: 39948
+  uuid: 2558c819-1363-4859-8fb9-f8cb104d49d2
+  network: tcp#🍉23@oneclickvpnkeys
+  security: none
+  tls: false
+  udp: true
+- name: 78oneclickvpnkeys
+  type: trojan
+  server: 58.152.46.98
+  port: 443
+  password: BxceQaOe
+  sni: ''
+  udp: true
+- name: Telegramconfig_proxy (14)
+  type: vless
+  server: 46.250.237.164
+  port: 55076
+  uuid: fe7d9497-c04b-4462-900d-333abc79a90f
+  network: tcp#Telegram:@config_proxy 💦
+  security: none
+  tls: false
+  udp: true
+- name: 31oneclickvpnkeys
+  type: vless
+  server: 109.123.236.161
+  port: 42692
+  uuid: c4ccf00e-72c6-4fd9-b7ce-f625a835539f
+  network: tcp#♟️31@oneclickvpnkeys
+  security: none
+  tls: false
+  udp: true
+- name: V2rayNGVPN  کانفیگ رایگان (8)
+  type: vless
+  server: ovhwuxian.pai50288.uk
+  port: 8443
+  uuid: 57ba2ab1-a283-42eb-82ee-dc3561a805b8
+  network: ws
+  security: tls
+  tls: true
+  udp: true
+- name: 80oneclickvpnkeys
+  type: trojan
+  server: 116.49.237.130
+  port: 518
+  password: BxceQaOe
+  sni: t.me/ripaojiedian#🏅80@oneclickvpnkeys
+  udp: true
+- name: 179.61.219.170
+  type: vless
+  server: 179.61.219.170
+  port: 22934
+  uuid: 0cd276a5-4501-413a-acf8-b51c54894f02
+  network: tcp#179.61.219.170
+  security: none
+  tls: false
+  udp: true
+- name: Node-92
+  type: vmess
+  server: 91.134.8.101
+  port: 443
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: true
+  network: ws
+  ws-opts:
+    path: linkvws
+    headers:
+      Host: fapeng.org
 - name: 179.61.219.170 (1)
   type: vless
   server: 179.61.219.170
@@ -537,32 +534,11 @@ proxies:
   security: none
   tls: false
   udp: true
-- name: Node-97
+- name: Node-116
   type: vmess
-  server: 8.218.140.27
-  port: 13589
-  uuid: 9297b311-b73a-4332-9016-bb25cbe475ee
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: false
-  network: ws
-  ws-opts:
-    path: /arki?ed=2048
-- name: V2rayNGVPN  کانفیگ رایگان (13)
-  type: vless
-  server: pl.nnvpn.io
-  port: 443
-  uuid: 83e57c25-1c8e-429f-974f-e3bde3fff12d
-  network: tcp
-  security: reality
-  tls: false
-  udp: true
-- name: Node-100
-  type: vmess
-  server: 8.218.140.27
-  port: 32876
-  uuid: d54c887a-7d47-4dc8-995d-df7687ef0494
+  server: 47.238.247.69
+  port: 8535
+  uuid: aca68896-1d4e-41fc-b1ed-e9295c8a5f5e
   alterId: 0
   cipher: auto
   udp: true
@@ -577,191 +553,185 @@ proxy-groups:
   interval: 600
   proxies:
   - V2rayNGVPN  کانفیگ رایگان
-  - Telegramconfig_proxy (1)
-  - Telegramconfig_proxy (2)
-  - 179.61.219.170
-  - 8oneclickvpnkeys
-  - Telegramconfig_proxy (3)
-  - Node-15
-  - Node-16
-  - 15oneclickvpnkeys
-  - 32oneclickvpnkeys
-  - 95.164.45.122
-  - 17oneclickvpnkeys
+  - Telegramconfig_proxy
+  - V2rayNGVPN  کانفیگ رایگان (1)
   - V2rayNGVPN  کانفیگ رایگان (2)
-  - Node-28
-  - Node-29
+  - V2rayNGVPN  کانفیگ رایگان (3)
+  - 8oneclickvpnkeys
+  - Telegramconfig_proxy (1)
+  - 77oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (4)
-  - 28oneclickvpnkeys
   - I 1139 Outline_Vpn free
-  - 15oneclickvpnkeys (1)
-  - 62oneclickvpnkeys
-  - 45.88.183.158
-  - 45.88.183.164
-  - 23oneclickvpnkeys
-  - 45.88.183.164 (1)
-  - V2rayNGVPN  کانفیگ رایگان (5)
-  - 5oneclickvpnkeys (1)
-  - 3oneclickvpnkeys
-  - 1oneclickvpnkeys (1)
-  - Node-52
-  - Node-53
-  - 19oneclickvpnkeys
-  - 4oneclickvpnkeys
-  - Node-56
-  - v2ray_configs_poolPolandWarsaw Praga-Północping110.57ms
+  - 17oneclickvpnkeys
+  - Telegramconfig_proxy (2)
+  - Telegramconfig_proxy (3)
+  - 15oneclickvpnkeys
+  - 95.164.45.122
   - Telegramconfig_proxy (4)
-  - 31oneclickvpnkeys
-  - 32oneclickvpnkeys (1)
-  - Node-66
-  - Node-67
-  - 42oneclickvpnkeys
-  - V2rayNGVPN  کانفیگ رایگان (6)
-  - Node-70
-  - 28oneclickvpnkeys (1)
-  - v2ray_configs_poolKazakhstanAlmatyping123.72ms
+  - Node-17
   - Telegramconfig_proxy (5)
+  - Node-20
+  - Node-25
+  - Telegramconfig_proxy (7)
+  - Telegramconfig_proxy (8)
+  - Telegramconfig_proxy (9)
+  - V2rayNGVPN  کانفیگ رایگان (6)
+  - 32oneclickvpnkeys
   - 9oneclickvpnkeys
+  - 45.88.183.158
+  - 45.88.183.156
+  - Node-42
+  - Node-46
+  - Node-48
+  - Node-49
+  - Node-51
+  - 45.88.183.164
+  - Node-57
+  - 62oneclickvpnkeys
+  - 15oneclickvpnkeys (1)
+  - 38.47.176.134
+  - 19oneclickvpnkeys
+  - v2ray_configs_poolKazakhstanAlmatyping123.72ms
+  - Telegramconfig_proxy (10)
+  - Telegramconfig_proxy (11)
+  - Telegramconfig_proxy (12)
+  - Node-72
+  - Telegramconfig_proxy (13)
+  - V2rayNGVPN  کانفیگ رایگان (7)
+  - 28oneclickvpnkeys
+  - 23oneclickvpnkeys
+  - 78oneclickvpnkeys
+  - Telegramconfig_proxy (14)
+  - 31oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (8)
-  - V2rayNGVPN  کانفیگ رایگان (9)
-  - Node-83
-  - V2rayNGVPN  کانفیگ رایگان (10)
-  - I 1141 Outline_Vpn free
-  - Node-86
-  - V2rayNGVPN  کانفیگ رایگان (11)
-  - V2rayNGVPN  کانفیگ رایگان (12)
-  - 64oneclickvpnkeys
+  - 80oneclickvpnkeys
+  - 179.61.219.170
+  - Node-92
   - 179.61.219.170 (1)
-  - Node-97
-  - V2rayNGVPN  کانفیگ رایگان (13)
-  - Node-100
+  - Node-116
 - name: Balance
   type: load-balance
   strategy: consistent-hashing
   proxies:
   - V2rayNGVPN  کانفیگ رایگان
-  - Telegramconfig_proxy (1)
-  - Telegramconfig_proxy (2)
-  - 179.61.219.170
-  - 8oneclickvpnkeys
-  - Telegramconfig_proxy (3)
-  - Node-15
-  - Node-16
-  - 15oneclickvpnkeys
-  - 32oneclickvpnkeys
-  - 95.164.45.122
-  - 17oneclickvpnkeys
+  - Telegramconfig_proxy
+  - V2rayNGVPN  کانفیگ رایگان (1)
   - V2rayNGVPN  کانفیگ رایگان (2)
-  - Node-28
-  - Node-29
+  - V2rayNGVPN  کانفیگ رایگان (3)
+  - 8oneclickvpnkeys
+  - Telegramconfig_proxy (1)
+  - 77oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (4)
-  - 28oneclickvpnkeys
   - I 1139 Outline_Vpn free
-  - 15oneclickvpnkeys (1)
-  - 62oneclickvpnkeys
-  - 45.88.183.158
-  - 45.88.183.164
-  - 23oneclickvpnkeys
-  - 45.88.183.164 (1)
-  - V2rayNGVPN  کانفیگ رایگان (5)
-  - 5oneclickvpnkeys (1)
-  - 3oneclickvpnkeys
-  - 1oneclickvpnkeys (1)
-  - Node-52
-  - Node-53
-  - 19oneclickvpnkeys
-  - 4oneclickvpnkeys
-  - Node-56
-  - v2ray_configs_poolPolandWarsaw Praga-Północping110.57ms
+  - 17oneclickvpnkeys
+  - Telegramconfig_proxy (2)
+  - Telegramconfig_proxy (3)
+  - 15oneclickvpnkeys
+  - 95.164.45.122
   - Telegramconfig_proxy (4)
-  - 31oneclickvpnkeys
-  - 32oneclickvpnkeys (1)
-  - Node-66
-  - Node-67
-  - 42oneclickvpnkeys
-  - V2rayNGVPN  کانفیگ رایگان (6)
-  - Node-70
-  - 28oneclickvpnkeys (1)
-  - v2ray_configs_poolKazakhstanAlmatyping123.72ms
+  - Node-17
   - Telegramconfig_proxy (5)
+  - Node-20
+  - Node-25
+  - Telegramconfig_proxy (7)
+  - Telegramconfig_proxy (8)
+  - Telegramconfig_proxy (9)
+  - V2rayNGVPN  کانفیگ رایگان (6)
+  - 32oneclickvpnkeys
   - 9oneclickvpnkeys
+  - 45.88.183.158
+  - 45.88.183.156
+  - Node-42
+  - Node-46
+  - Node-48
+  - Node-49
+  - Node-51
+  - 45.88.183.164
+  - Node-57
+  - 62oneclickvpnkeys
+  - 15oneclickvpnkeys (1)
+  - 38.47.176.134
+  - 19oneclickvpnkeys
+  - v2ray_configs_poolKazakhstanAlmatyping123.72ms
+  - Telegramconfig_proxy (10)
+  - Telegramconfig_proxy (11)
+  - Telegramconfig_proxy (12)
+  - Node-72
+  - Telegramconfig_proxy (13)
+  - V2rayNGVPN  کانفیگ رایگان (7)
+  - 28oneclickvpnkeys
+  - 23oneclickvpnkeys
+  - 78oneclickvpnkeys
+  - Telegramconfig_proxy (14)
+  - 31oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (8)
-  - V2rayNGVPN  کانفیگ رایگان (9)
-  - Node-83
-  - V2rayNGVPN  کانفیگ رایگان (10)
-  - I 1141 Outline_Vpn free
-  - Node-86
-  - V2rayNGVPN  کانفیگ رایگان (11)
-  - V2rayNGVPN  کانفیگ رایگان (12)
-  - 64oneclickvpnkeys
+  - 80oneclickvpnkeys
+  - 179.61.219.170
+  - Node-92
   - 179.61.219.170 (1)
-  - Node-97
-  - V2rayNGVPN  کانفیگ رایگان (13)
-  - Node-100
+  - Node-116
 - name: Fallback
   type: fallback
   url: https://www.gstatic.com/generate_204
   interval: 300
   proxies:
   - V2rayNGVPN  کانفیگ رایگان
-  - Telegramconfig_proxy (1)
-  - Telegramconfig_proxy (2)
-  - 179.61.219.170
-  - 8oneclickvpnkeys
-  - Telegramconfig_proxy (3)
-  - Node-15
-  - Node-16
-  - 15oneclickvpnkeys
-  - 32oneclickvpnkeys
-  - 95.164.45.122
-  - 17oneclickvpnkeys
+  - Telegramconfig_proxy
+  - V2rayNGVPN  کانفیگ رایگان (1)
   - V2rayNGVPN  کانفیگ رایگان (2)
-  - Node-28
-  - Node-29
+  - V2rayNGVPN  کانفیگ رایگان (3)
+  - 8oneclickvpnkeys
+  - Telegramconfig_proxy (1)
+  - 77oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (4)
-  - 28oneclickvpnkeys
   - I 1139 Outline_Vpn free
-  - 15oneclickvpnkeys (1)
-  - 62oneclickvpnkeys
-  - 45.88.183.158
-  - 45.88.183.164
-  - 23oneclickvpnkeys
-  - 45.88.183.164 (1)
-  - V2rayNGVPN  کانفیگ رایگان (5)
-  - 5oneclickvpnkeys (1)
-  - 3oneclickvpnkeys
-  - 1oneclickvpnkeys (1)
-  - Node-52
-  - Node-53
-  - 19oneclickvpnkeys
-  - 4oneclickvpnkeys
-  - Node-56
-  - v2ray_configs_poolPolandWarsaw Praga-Północping110.57ms
+  - 17oneclickvpnkeys
+  - Telegramconfig_proxy (2)
+  - Telegramconfig_proxy (3)
+  - 15oneclickvpnkeys
+  - 95.164.45.122
   - Telegramconfig_proxy (4)
-  - 31oneclickvpnkeys
-  - 32oneclickvpnkeys (1)
-  - Node-66
-  - Node-67
-  - 42oneclickvpnkeys
-  - V2rayNGVPN  کانفیگ رایگان (6)
-  - Node-70
-  - 28oneclickvpnkeys (1)
-  - v2ray_configs_poolKazakhstanAlmatyping123.72ms
+  - Node-17
   - Telegramconfig_proxy (5)
+  - Node-20
+  - Node-25
+  - Telegramconfig_proxy (7)
+  - Telegramconfig_proxy (8)
+  - Telegramconfig_proxy (9)
+  - V2rayNGVPN  کانفیگ رایگان (6)
+  - 32oneclickvpnkeys
   - 9oneclickvpnkeys
+  - 45.88.183.158
+  - 45.88.183.156
+  - Node-42
+  - Node-46
+  - Node-48
+  - Node-49
+  - Node-51
+  - 45.88.183.164
+  - Node-57
+  - 62oneclickvpnkeys
+  - 15oneclickvpnkeys (1)
+  - 38.47.176.134
+  - 19oneclickvpnkeys
+  - v2ray_configs_poolKazakhstanAlmatyping123.72ms
+  - Telegramconfig_proxy (10)
+  - Telegramconfig_proxy (11)
+  - Telegramconfig_proxy (12)
+  - Node-72
+  - Telegramconfig_proxy (13)
+  - V2rayNGVPN  کانفیگ رایگان (7)
+  - 28oneclickvpnkeys
+  - 23oneclickvpnkeys
+  - 78oneclickvpnkeys
+  - Telegramconfig_proxy (14)
+  - 31oneclickvpnkeys
   - V2rayNGVPN  کانفیگ رایگان (8)
-  - V2rayNGVPN  کانفیگ رایگان (9)
-  - Node-83
-  - V2rayNGVPN  کانفیگ رایگان (10)
-  - I 1141 Outline_Vpn free
-  - Node-86
-  - V2rayNGVPN  کانفیگ رایگان (11)
-  - V2rayNGVPN  کانفیگ رایگان (12)
-  - 64oneclickvpnkeys
+  - 80oneclickvpnkeys
+  - 179.61.219.170
+  - Node-92
   - 179.61.219.170 (1)
-  - Node-97
-  - V2rayNGVPN  کانفیگ رایگان (13)
-  - Node-100
+  - Node-116
 - name: Global ©️
   type: select
   proxies:
