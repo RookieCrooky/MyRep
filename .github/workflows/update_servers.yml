@@ -24,7 +24,7 @@ jobs:
 
     - name: Download servers.txt
       run: |
-        curl -L -o servers.txt https://raw.githubusercontent.com/zieng2/wl/refs/heads/main/vless_lite.txt
+        curl -L -o servers.txt https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt
 
     - name: Convert servers.txt → servers.yml
       run: |
