@@ -15,9 +15,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}  # Используем GITHUB_TOKEN как запасной вариант
-
+    
     - name: Install dependencies
       run: |
         sudo apt-get update
@@ -271,19 +269,11 @@ jobs:
         print(f"Пропущено {len(lines) - len(proxies)} некорректных прокси")
         EOF
 
+   
     - name: Commit and Push changes
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add servers.txt servers.yml
-        
-        # Проверяем, есть ли изменения
-        if git diff --quiet HEAD; then
-          echo "Нет изменений для коммита"
-        else
-          git commit -m "Update servers.txt and generate servers.yml [$(date +'%Y-%m-%d %H:%M')]"
-          git push
-        fi
-      env:
-        # Используем тот же токен, что и в checkout
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+        git diff-index --quiet HEAD || git commit -m "Update servers.txt and generate servers.yml"
+        git push  # Просто git push, без URL
