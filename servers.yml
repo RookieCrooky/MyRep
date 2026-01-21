@@ -1,1216 +1,1497 @@
+port: 7890
+socks-port: 7891
+allow-lan: false
+mode: rule
+log-level: info
+external-controller: 0.0.0.0:9090
+secret: ''
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  default-nameserver:
+  - 8.8.8.8
+  - 1.1.1.1
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+  - https://doh.pub/dns-query
+  - https://dns.alidns.com/dns-query
+  fallback:
+  - https://doh.dns.sb/dns-query
+  - https://dns.cloudflare.com/dns-query
+  - https://dns.twnic.tw/dns-query
 proxies:
-- name: Albania CIDR
+- name: Server-3
   type: vless
   server: 185.177.238.18
   port: 2083
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: grpc#🇦🇱 Albania [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Albania CIDR (1)
+  tls: true
+  servername: apple.com
+  reality-opts:
+    public-key: J6NuOlIq3ypdTFc1TMhDDKmF8BWPnNWZq1EkxD7K-lQ
+    short-id: 6da16b1335651b38
+- name: Server-4
   type: vless
   server: al.appav.online
   port: 2083
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: grpc
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR
+  tls: true
+  servername: apple.com
+  reality-opts:
+    public-key: J6NuOlIq3ypdTFc1TMhDDKmF8BWPnNWZq1EkxD7K-lQ
+    short-id: 6da16b1335651b38
+  grpc-opts:
+    grpc-service-name: UpdateService
+- name: Server-5
   type: vless
   server: 144.31.90.215
   port: 443
   uuid: 02fb468f-21f2-460e-bfa1-ef52ae5e627f
   network: tcp
-  security: tls
-  tls: true
   udp: true
-- name: Finland CIDR (1)
+  tls: true
+  servername: ficdn19.suio.me
+- name: Server-6
   type: vless
   server: 144.31.19.106
   port: 8443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: ws#🇫🇮 Finland [*CIDR]
-  security: tls
-  tls: true
   udp: true
-- name: Finland CIDR (2)
+  tls: true
+  servername: chat.speedload.ru
+- name: Server-7
   type: vless
   server: 144.31.90.91
   port: 8104
   uuid: 7b70baf7-4721-48ef-a9a4-764d45ad0efa
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (3)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: a45e469943654522
+- name: Server-8
   type: vless
   server: 144.31.90.93
   port: 8104
   uuid: 7b70baf7-4721-48ef-a9a4-764d45ad0efa
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (4)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: 9f4ca836ca270ef8
+- name: Server-9
   type: vless
   server: 144.31.90.93
   port: 8104
   uuid: 7b70baf7-4721-48ef-a9a4-764d45ad0efa
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (5)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: a45e469943654522
+- name: Server-10
   type: vless
   server: 144.31.90.94
   port: 8104
   uuid: 7b70baf7-4721-48ef-a9a4-764d45ad0efa
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (6)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: a45e469943654522
+- name: Server-11
   type: vless
   server: 144.31.90.96
   port: 8104
   uuid: 7b70baf7-4721-48ef-a9a4-764d45ad0efa
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (7)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: 9f4ca836ca270ef8
+- name: Server-12
   type: vless
   server: 144.31.90.96
   port: 8104
   uuid: 7b70baf7-4721-48ef-a9a4-764d45ad0efa
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (8)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: a45e469943654522
+- name: Server-13
   type: vless
   server: 144.31.90.97
   port: 8104
   uuid: 7b70baf7-4721-48ef-a9a4-764d45ad0efa
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (9)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: a45e469943654522
+- name: Server-14
   type: vless
   server: 158.160.149.4
   port: 443
   uuid: 7fbb424e-fd85-42ea-a86a-26cec380fcf7
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (10)
+  tls: true
+  servername: maps.yandex.ru
+  reality-opts:
+    public-key: 0rPvIBbfmdq3YJkkNGc8p7t-1zme85V-nj3v8ekm4DE
+    short-id: 1b3de616b36b1233
+- name: Server-15
   type: vless
   server: 62.84.119.10
   port: 443
   uuid: 7fbb424e-fd85-42ea-a86a-26cec380fcf7
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (11)
+  tls: true
+  servername: yandex.ru
+  reality-opts:
+    public-key: 36hklag_tQNTa-asdzniCl22p3f5jgPK7RsMOBckpkc
+    short-id: 02468ace13579bdf
+- name: Server-16
   type: vless
   server: 89.169.157.4
   port: 443
   uuid: 7fbb424e-fd85-42ea-a86a-26cec380fcf7
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (12)
+  tls: true
+  servername: m.47news.ru
+  reality-opts:
+    public-key: 36hklag_tQNTa-asdzniCl22p3f5jgPK7RsMOBckpkc
+    short-id: 02468ace13579bdf
+- name: Server-17
   type: vless
   server: 78.159.247.131
   port: 7443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (13)
+  tls: true
+  servername: ir-2.ozone.ru#🇫🇮 Finland [*CIDR]
+  reality-opts:
+    public-key: J5ITJbg5FQFembAfkogKHHQB6DigsFXQxK7xu-QMWUs
+    short-id: a20d3ed244c76426
+- name: Server-18
   type: vless
   server: cdn.glorypay.ru
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: tls
-  tls: true
   udp: true
-- name: Finland CIDR (14)
+  tls: true
+  servername: cdn.glorypay.ru
+- name: Server-19
   type: vless
   server: 144.31.119.84
   port: 443
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (15)
+  tls: true
+  servername: st.ozone.ru
+  reality-opts:
+    public-key: 9ajY_OBOn5CCPnCJTPjxg6J3IWE8uJYAiWQvG9CBGjU
+    short-id: 00684d2eae2cdd16
+- name: Server-20
   type: vless
   server: 144.31.19.193
   port: 443
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (16)
+  tls: true
+  servername: st.ozone.ru
+  reality-opts:
+    public-key: 9ajY_OBOn5CCPnCJTPjxg6J3IWE8uJYAiWQvG9CBGjU
+    short-id: 00684d2eae2cdd16
+- name: Server-21
   type: vless
   server: fi.appav.online
   port: 443
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (17)
+  tls: true
+  servername: st.ozone.ru#🇫🇮 Finland [*CIDR]
+  reality-opts:
+    public-key: 9ajY_OBOn5CCPnCJTPjxg6J3IWE8uJYAiWQvG9CBGjU
+    short-id: 00684d2eae2cdd16
+- name: Server-22
   type: vless
   server: 144.31.90.92
   port: 8104
   uuid: ca2b2268-e2c4-4a78-beee-111189a861e7
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (18)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: 1afc9d750da1ba88
+- name: Server-23
   type: vless
   server: 144.31.90.95
   port: 8104
   uuid: ca2b2268-e2c4-4a78-beee-111189a861e7
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (19)
+  tls: true
+  servername: tradingview.com#🇫🇮 Finland [*CIDR]
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: 1afc9d750da1ba88
+- name: Server-24
   type: vless
   server: fi-h2-01.com
   port: 8104
   uuid: ca2b2268-e2c4-4a78-beee-111189a861e7
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (20)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+    short-id: 1afc9d750da1ba88
+- name: Server-25
   type: vless
   server: 130.193.56.74
   port: 443
   uuid: e34a84c4-8a52-4b4e-9a7d-cfa1a4d77e95
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (21)
+  tls: true
+  servername: yandex.ru
+  reality-opts:
+    public-key: 0rPvIBbfmdq3YJkkNGc8p7t-1zme85V-nj3v8ekm4DE
+    short-id: 1b3de616b36b1233#🇫🇮 Finland [*CIDR]
+- name: Server-26
   type: vless
   server: 46.21.245.143
   port: 443
   uuid: f23dd209-5f9a-4e82-b975-38b32df69e86
   network: tcp#🇫🇮 Finland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Finland CIDR (22)
+  tls: true
+  servername: ads.x5.ru
+  reality-opts:
+    public-key: _1CdC4TRCkeTD3sHtnnZo2kkCGZkbYzLO2I-mJsWvmk
+    short-id: e3b1c4d5a6f70912
+- name: Server-27
   type: vless
   server: 51.250.38.225
   port: 443
   uuid: f23dd209-5f9a-4e82-b975-38b32df69e86
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR
+  tls: true
+  servername: ya.ru
+  reality-opts:
+    public-key: 0rPvIBbfmdq3YJkkNGc8p7t-1zme85V-nj3v8ekm4DE
+    short-id: 1b3de616b36b1233
+- name: Server-28
   type: vless
   server: 51.250.37.17
   port: 9493
   uuid: 6a8c9ed1-0db6-4505-ac18-aaf99ec37370
   network: tcp#🇩🇪 Germany [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (1)
+  tls: true
+  servername: max.ru
+  reality-opts:
+    public-key: IdDtRnUGxwVJjxCQNH5bwkKh8HF5JqJa7WOEQOSmYXk
+    short-id: d516acf00a2b0b5a
+- name: Server-29
   type: vless
   server: de1.sipi.pro
   port: 443
   uuid: 85534802-e9e3-4887-896a-3860dfaeb4bf
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (2)
+  tls: true
+  servername: de1.sipi.pro#🇩🇪 Germany [*CIDR]
+  reality-opts:
+    public-key: B2ED6LqZqQVNsVcFC9GWZZ5mdmEH4nKNdQj23FQZCHU
+    short-id: a48081096ffcc2ca
+- name: Server-30
   type: vless
   server: 51.250.54.138
   port: 8090
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (3)
+  tls: true
+  servername: max.ru
+  reality-opts:
+    public-key: J5ITJbg5FQFembAfkogKHHQB6DigsFXQxK7xu-QMWUs
+    short-id: 6b2f4e6ac9b1d2f0
+- name: Server-31
   type: vless
   server: 51.250.35.199
   port: 59152
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: tcp#🇩🇪 Germany [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (4)
+  tls: true
+  servername: ads.x5.ru
+  reality-opts:
+    public-key: y8f0sznQFqvSOPFcFvPcQFfXbz0Ag10ySB4A88OXMy0
+    short-id: effab4f3a0ed698e
+- name: Server-32
   type: vless
   server: 51.250.45.175
   port: 443
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: tcp#🇩🇪 Germany [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (5)
+  tls: true
+  servername: api-maps.yandex.ru
+  reality-opts:
+    public-key: Uwz6QjH6QTonKba4RVv35LNmhJLA6c2kxtI2nXRQWTg
+    short-id: 2c60d62e1d95c07a
+- name: Server-33
   type: vless
   server: 84.252.138.149
   port: 47014
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: tcp#🇩🇪 Germany [*CIDR]
-  security: none
-  tls: false
   udp: true
-- name: Germany CIDR (6)
+- name: Server-34
   type: vless
   server: vkc-sub9.appav.online
   port: 62443
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: grpc
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (7)
+  tls: true
+  servername: api-maps.yandex.ru
+  reality-opts:
+    public-key: qwGpMbc6HUZoxbeFaG-JoIfI_Sdryg-w_muocbZTCyk
+    short-id: c89210338c9d029f
+  grpc-opts:
+    grpc-service-name: UpdateService#🇩🇪 Germany [*CIDR]
+- name: Server-35
   type: vless
   server: 176.109.104.107
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp#🇩🇪 Germany [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (8)
+  tls: true
+  servername: carreta.ru
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: 2f3e735aedc55aaf
+- name: Server-36
   type: vless
   server: 87.242.103.63
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp#🇩🇪 Germany [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (9)
+  tls: true
+  servername: carreta.ru
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: 2f3e735aedc55aaf
+- name: Server-37
   type: vless
   server: 95.174.92.156
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp#🇩🇪 Germany [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Germany CIDR (10)
+  tls: true
+  servername: carreta.ru
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: 2f3e735aedc55aaf
+- name: Server-38
   type: vless
   server: 151.236.15.72
   port: 444
   uuid: faaaf16e-188e-42f2-bcc1-17feadc84fad
   network: raw
-  security: reality
-  tls: false
   udp: true
-- name: Hungary CIDR
+  tls: true
+  servername: opensuse.org
+  reality-opts:
+    public-key: FOSoac3DIrSrCUcBtQA-BdHMxCtqe2CYCpdvGxKMiUw
+    short-id: 82b9ca5d8d39ba72#🇩🇪 Germany [*CIDR]
+- name: Server-39
   type: vless
   server: 83.166.236.32
   port: 8443
   uuid: 1dcea73b-a19f-4c6f-8878-ba4f4b9bd49a
   network: tcp#🇭🇺 Hungary [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Hungary CIDR (1)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
+    short-id: f4b4a6365558ea2e
+- name: Server-40
   type: vless
   server: 217.13.104.134
   port: 443
   uuid: 4371ad14-b981-4699-bedf-83fb79bde3e6
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Hungary CIDR (2)
+  tls: true
+  servername: hu.jojack.ru
+  reality-opts:
+    public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+    short-id: e55fd8f9c9a9a0ca#🇭🇺 Hungary [*CIDR]
+- name: Server-41
   type: vless
   server: 217.13.104.115
   port: 443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: tcp#🇭🇺 Hungary [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Hungary CIDR (3)
+  tls: true
+  servername: sun6-22.userapi.com
+  reality-opts:
+    public-key: HmnZvWf1xDzvps8H-juYYtHnWPZksvaUp6cMYV7TfSk
+    short-id: a20d3ed244c76426
+- name: Server-42
   type: vless
   server: 217.13.104.130
   port: 443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: xhttp#🇭🇺 Hungary [*CIDR]
-  security: tls
-  tls: true
   udp: true
-- name: Hungary CIDR (4)
+  tls: true
+  servername: chat.speedload.ru
+- name: Server-43
   type: vless
   server: 217.13.104.130
   port: 443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: xhttp
-  security: tls
-  tls: true
   udp: true
-- name: Hungary CIDR (5)
+  tls: true
+  servername: chat.speedload.ru
+- name: Server-44
   type: vless
   server: 217.13.104.130
   port: 8443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: ws#🇭🇺 Hungary [*CIDR]
-  security: tls
-  tls: true
   udp: true
-- name: Hungary CIDR (6)
+  tls: true
+  servername: chat.speedload.ru
+- name: Server-45
   type: vless
   server: 217.13.104.130
   port: 8443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: ws#🇭🇺 Hungary [*CIDR]
-  security: tls
-  tls: true
   udp: true
-- name: Hungary CIDR (7)
+  tls: true
+  servername: chat.speedload.ru
+- name: Server-46
   type: vless
   server: 217.13.104.197
   port: 443
   uuid: 7fbb424e-fd85-42ea-a86a-26cec380fcf7
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Hungary CIDR (8)
+  tls: true
+  servername: yandex.ru
+  reality-opts:
+    public-key: 0rPvIBbfmdq3YJkkNGc8p7t-1zme85V-nj3v8ekm4DE
+    short-id: 1b3de616b36b1233
+- name: Server-47
   type: vless
   server: 217.13.104.197
   port: 443
   uuid: f23dd209-5f9a-4e82-b975-38b32df69e86
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Italy CIDR
+  tls: true
+  servername: yandex.ru
+  reality-opts:
+    public-key: 0rPvIBbfmdq3YJkkNGc8p7t-1zme85V-nj3v8ekm4DE
+    short-id: 1b3de616b36b1233
+- name: Server-48
   type: vless
   server: 89.208.86.65
   port: 8443
   uuid: 3ae15044-79fd-436d-a5ef-ce680bcfca56
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Italy CIDR (1)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+    short-id: f32140952ba18e18
+- name: Server-49
   type: vless
   server: tralalero.site
   port: 8443
   uuid: eda2c296-a990-4d41-bbdf-f9c96b9579cd
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Japan CIDR
+  tls: true
+  servername: tradingview.com#🇮🇹 Italy [*CIDR]
+  reality-opts:
+    public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+    short-id: 6419bed7fd0a2cff
+- name: Server-50
   type: vless
   server: 5.253.41.96
   port: 8443
   uuid: 87acc4db-5403-4e4c-80a7-34a8a98990de
   network: tcp#🇯🇵 Japan [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Japan CIDR (1)
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: CwOLLTLuQN1SPzvenr_B_ErYYoOB_ScSvGvH-iYOtF8
+    short-id: 98f4e12d491b58ec
+- name: Server-51
   type: vless
   server: shimorra.site
   port: 8443
   uuid: 87acc4db-5403-4e4c-80a7-34a8a98990de
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Latvia CIDR
+  tls: true
+  servername: tradingview.com
+  reality-opts:
+    public-key: CwOLLTLuQN1SPzvenr_B_ErYYoOB_ScSvGvH-iYOtF8
+    short-id: f1af4b63b7e47b8a
+- name: Server-52
   type: vless
   server: 217.16.26.35
   port: 4249
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: tcp#🇱🇻 Latvia [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Latvia CIDR (1)
+  tls: true
+  servername: sun6-22.userapi.com
+  reality-opts:
+    public-key: rM45Cp3e3veVH2tXVvdFcABWf36XZkhmjrIrLpVVQjc
+    short-id: a20d3ed244c76426
+- name: Server-53
   type: vless
   server: 51.250.123.48
   port: 8090
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: reality
-  tls: false
   udp: true
-- name: Lithuania CIDR
+  tls: true
+  servername: taxi.yandex.ru
+  reality-opts:
+    public-key: J5ITJbg5FQFembAfkogKHHQB6DigsFXQxK7xu-QMWUs
+    short-id: 6b2f4e6ac9b1d2f0
+- name: Server-54
   type: vless
   server: 87.242.100.40
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp#🇱🇹 Lithuania [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Poland CIDR (1)
+  tls: true
+  servername: sun6-22.userapi.com
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: df5f7ec1de636bbb
+- name: Server-56
   type: vless
   server: plcdn20.suio.me
   port: 443
   uuid: 02fb468f-21f2-460e-bfa1-ef52ae5e627f
   network: tcp
-  security: tls
-  tls: true
   udp: true
-- name: Poland CIDR (2)
+  tls: true
+  servername: plcdn20.suio.me
+- name: Server-57
   type: vless
   server: 144.31.0.65
   port: 7443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: tcp#🇵🇱 Poland [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Poland CIDR (3)
+  tls: true
+  servername: fastt.overload.ovh
+  reality-opts:
+    public-key: J5ITJbg5FQFembAfkogKHHQB6DigsFXQxK7xu-QMWUs
+    short-id: a20d3ed244c76426
+- name: Server-58
   type: vless
   server: 176.123.164.110
   port: 51102
   uuid: 661e8eb5-c7eb-4bb0-b58f-46a5bb3f8f74
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Poland CIDR (4)
+  tls: true
+  servername: m.vk.ru
+  reality-opts:
+    public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
+    short-id: 1929ef620e9b34f5
+- name: Server-59
   type: vless
   server: 89.208.87.173
   port: 8443
   uuid: 661e8eb5-c7eb-4bb0-b58f-46a5bb3f8f74
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Poland CIDR (5)
+  tls: true
+  servername: m.vk.com#🇵🇱 Poland [*CIDR]
+  reality-opts:
+    public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
+    short-id: 8f222b3475800821
+- name: Server-60
   type: vless
   server: 144.31.0.65
   port: 7443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Poland CIDR (6)
+  tls: true
+  servername: fastt.overload.ovh#🇵🇱 Poland [*CIDR]
+  reality-opts:
+    public-key: J5ITJbg5FQFembAfkogKHHQB6DigsFXQxK7xu-QMWUs
+    short-id: a20d3ed244c76426
+- name: Server-61
   type: vless
   server: 185.40.154.13
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp#🇵🇱 Poland [*CIDR]
-  security: tls
-  tls: true
   udp: true
-- name: Poland CIDR (7)
+  tls: true
+  servername: api.furypay.ru
+- name: Server-62
   type: vless
   server: 185.40.154.13
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: tls
-  tls: true
   udp: true
-- name: Poland CIDR (8)
+  tls: true
+  servername: api.furypay.ru
+- name: Server-63
   type: vless
   server: 185.40.155.13
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: tls
-  tls: true
   udp: true
-- name: Poland CIDR (9)
+  tls: true
+  servername: api.furypay.ru
+- name: Server-64
   type: vless
   server: api.furypay.ru
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: tls
+  udp: true
   tls: true
-  udp: true
-- name: Slovakia CIDR
+  servername: api.furypay.ru
+- name: Server-65
   type: vless
   server: 45.129.141.130
   port: 34045
   uuid: d8dd94fd-540e-461d-b5d4-acebef02c22a
   network: tcp#🇸🇰 Slovakia [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Slovakia CIDR (1)
+  tls: true
+  servername: visit-this-invitation-link-to-join-tg-enkelte-notif.ekt.me
+  reality-opts:
+    public-key: cDaDzPr3PlS3NM8lreHZbdo-Mhqz8vMBzMSkHXhGIUA
+    short-id: e8ab71d0
+- name: Server-66
   type: vless
   server: 45.129.141.130
   port: 34045
   uuid: d8dd94fd-540e-461d-b5d4-acebef02c22a
   network: tcp#🇸🇰 Slovakia [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Sweden CIDR
+  tls: true
+  servername: visit-this-invitation-link-to-join-tg-enkelte-notif.ekt.me
+  reality-opts:
+    public-key: cDaDzPr3PlS3NM8lreHZbdo-Mhqz8vMBzMSkHXhGIUA
+    short-id: e8ab71d0
+- name: Server-67
   type: vless
   server: 176.109.104.107
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp#🇸🇪 Sweden [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Sweden CIDR (1)
+  tls: true
+  servername: lasercut.ru
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: 3c9c5d01c6f824dd
+- name: Server-68
   type: vless
   server: 87.242.103.63
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp#🇸🇪 Sweden [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR
+  tls: true
+  servername: lasercut.ru
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: 7e77e7e2cf2b7a79
+- name: Server-69
   type: vless
   server: cdn.fastload.site
   port: 443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: xhttp#🇳🇱 The Netherlands [*CIDR]
-  security: tls
-  tls: true
   udp: true
-- name: The Netherlands CIDR (1)
+  tls: true
+  servername: cdn.fastload.site
+- name: Server-70
   type: vless
   server: 128.75.228.190
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: tls
-  tls: true
   udp: true
-- name: The Netherlands CIDR (2)
+  tls: true
+  servername: cdn.fastload.site
+- name: Server-71
   type: vless
   server: 188.72.103.3
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: tls
-  tls: true
   udp: true
-- name: The Netherlands CIDR (3)
+  tls: true
+  servername: cdntwo.dnsttlocate.ru#🇳🇱 The Netherlands [*CIDR]
+- name: Server-72
   type: vless
   server: cdn.fastload.site
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: xhttp
-  security: tls
-  tls: true
   udp: true
-- name: The Netherlands CIDR (4)
+  tls: true
+  servername: cdn.fastload.site
+- name: Server-73
   type: vless
   server: 87.242.100.40
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp#🇳🇱 The Netherlands [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (5)
+  tls: true
+  servername: dc-electro.ru
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: 7e77e7e2cf2b7a79
+- name: Server-74
   type: vless
   server: ru-mh-node-01.fromblancwithlove.com
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (6)
+  tls: true
+  servername: dc-electro.ru
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: 7e77e7e2cf2b7a79#🇳🇱 The Netherlands [*CIDR]
+- name: Server-75
   type: vless
   server: 109.107.167.158
   port: 8443
   uuid: db444bee-8212-5ff5-be40-47e1a7509eb8
   network: xhttp
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (7)
+  tls: true
+  servername: vk.com
+  reality-opts:
+    public-key: BFHDnD3iEddOnr74XayvY_rsJ5FpVEuNlxJ86bPJpyg
+    short-id: '6530'
+- name: Server-76
   type: vless
   server: 109.107.167.184
   port: 443
   uuid: db444bee-8212-5ff5-be40-47e1a7509eb8
   network: xhttp#🇳🇱 The Netherlands [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (8)
+  tls: true
+  servername: sun6-21.userapi.com
+  reality-opts:
+    public-key: 6JYkJvkNiR3XQE2bkCV9r9URr5CXp2_RFlsBAi_Esg8
+    short-id: ed42
+- name: Server-77
   type: vless
   server: 77.238.255.53
   port: 8443
   uuid: db444bee-8212-5ff5-be40-47e1a7509eb8
   network: xhttp#🇳🇱 The Netherlands [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (9)
+  tls: true
+  servername: vk.com
+  reality-opts:
+    public-key: QEan1qWizcGCZAWf4k1j8MA4Y3fkxw5UE09aqnDEqwk
+    short-id: 314da8a632e5e8
+- name: Server-78
   type: vless
   server: 89.110.106.227
   port: 8443
   uuid: db444bee-8212-5ff5-be40-47e1a7509eb8
   network: xhttp#🇳🇱 The Netherlands [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (10)
+  tls: true
+  servername: vk.com
+  reality-opts:
+    public-key: 4-OR_IhA3b69zw9-XRWuXnWFHvc4P4VcVf6dnQO_x0Y
+    short-id: 2f44234255b6
+- name: Server-79
   type: vless
   server: 109.107.167.158
   port: 8443
   uuid: star_test1
   network: xhttp
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (11)
+  tls: true
+  servername: vk.com
+  reality-opts:
+    public-key: BFHDnD3iEddOnr74XayvY_rsJ5FpVEuNlxJ86bPJpyg
+    short-id: '6530'
+- name: Server-80
   type: vless
   server: 185.121.232.251
   port: 8443
   uuid: star_test1
   network: xhttp
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (12)
+  tls: true
+  servername: vk.com
+  reality-opts:
+    public-key: r5UDMc2_uZ8J9nYbKqq7G3TWpQL_W53sl7zDAUPPEn4
+    short-id: 40e0d46c46c7bd17
+- name: Server-81
   type: vless
   server: 185.121.232.251
   port: 8443
   uuid: star_test1
   network: xhttp
-  security: reality
-  tls: false
   udp: true
-- name: The Netherlands CIDR (13)
+  tls: true
+  servername: vk.com
+  reality-opts:
+    public-key: r5UDMc2_uZ8J9nYbKqq7G3TWpQL_W53sl7zDAUPPEn4
+    short-id: 40e0d46c46c7bd17#🇳🇱 The Netherlands [*CIDR]
+- name: Server-82
   type: vless
   server: 195.26.224.102
   port: 8443
   uuid: star_test1
   network: xhttp
-  security: reality
-  tls: false
   udp: true
-- name: Turkey CIDR
+  tls: true
+  servername: vk.com
+  reality-opts:
+    public-key: YroB2r6MeCXtjqqVx5gr45KTPCJF_kk2n0yqbHhEQSE
+    short-id: 743952dfbeb3
+- name: Server-83
   type: vless
   server: 178.154.204.180
   port: 443
   uuid: 32a45337-b56c-4e7a-8862-258f103eaa77
   network: tcp#🇹🇷 Turkey [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Turkey CIDR (1)
+  tls: true
+  servername: max.ru
+  reality-opts:
+    public-key: fdfPxIo_ioKf-zRBmiXZPcyziJpJCe5ARgzXH0kqpCw
+    short-id: a20d3ed244c76426
+- name: Server-84
   type: vless
   server: 212.233.95.237
   port: 8443
   uuid: 3b7ad1b7-e85a-46d3-ad4e-0943bd4c9d42
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Turkey CIDR (2)
+  tls: true
+  servername: tradingview.com#🇹🇷 Turkey [*CIDR]
+  reality-opts:
+    public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
+    short-id: e57932a42872a362
+- name: Server-85
   type: vless
   server: 84.23.53.252
   port: 443
   uuid: cc61ea7c-92f2-4c2d-b272-32cfe8fdf99f
   network: tcp#🇹🇷 Turkey [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: United States CIDR
+  tls: true
+  servername: medcomp.ru
+  reality-opts:
+    public-key: CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw
+    short-id: af2bebede7320b3e
+- name: Server-86
   type: vless
   server: 144.31.111.130
   port: 443
   uuid: a384c715-aeb5-45e8-859b-f687ca6c083f
   network: tcp#🇺🇸 United States [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: United States CIDR (1)
+  tls: true
+  servername: google.com
+  reality-opts:
+    public-key: wBrGfTI9PaFf966aN6KaCY0cL6QRLlop4nzNa6bJsiQ
+    short-id: 9f35da6c9412b832
+- name: Server-87
   type: vless
   server: 144.31.111.130
   port: 443
   uuid: a384c715-aeb5-45e8-859b-f687ca6c083f
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR
+  tls: true
+  servername: google.com
+  reality-opts:
+    public-key: wBrGfTI9PaFf966aN6KaCY0cL6QRLlop4nzNa6bJsiQ
+    short-id: 9f35da6c9412b832#🇺🇸 United States [*CIDR]
+- name: Server-88
   type: vless
   server: msk03.lambavps.online
   port: 443
   uuid: 411d247a-071a-4ade-a8fb-00316bf7509d
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (1)
+  tls: true
+  servername: apiok.ru
+  reality-opts:
+    public-key: YS9eF4uemctd80tICfPoMJC0SmDO1yMR8PsuQVemBWU
+    short-id: 460a1b7c34ae203f#🇷🇺 Russia [*CIDR]
+- name: Server-89
   type: vless
   server: 176.108.242.76
   port: 443
   uuid: 4371ad14-b981-4699-bedf-83fb79bde3e6
   network: tcp#🇷🇺 Russia [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (2)
+  tls: true
+  servername: www.rutube.ru
+  reality-opts:
+    public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+    short-id: 6354585c37827955
+- name: Server-90
   type: vless
   server: 176.108.242.76
   port: 443
   uuid: 4371ad14-b981-4699-bedf-83fb79bde3e6
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (3)
+  tls: true
+  servername: www.vkvideo.ru
+  reality-opts:
+    public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+    short-id: 6354585c37827955
+- name: Server-91
   type: vless
   server: 95.163.249.239
   port: 443
   uuid: 4371ad14-b981-4699-bedf-83fb79bde3e6
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (4)
+  tls: true
+  servername: m.vk.com
+  reality-opts:
+    public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+    short-id: 4b523a98e1bbd15b
+- name: Server-92
   type: vless
   server: 84.201.130.224
   port: 443
   uuid: 4fe214fb-048e-431f-b939-4518dc9df6a2
   network: tcp#🇷🇺 Russia [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (5)
+  tls: true
+  servername: io.ozone.ru
+  reality-opts:
+    public-key: J5ITJbg5FQFembAfkogKHHQB6DigsFXQxK7xu-QMWUs
+    short-id: a20d3ed244c76426
+- name: Server-93
   type: vless
   server: 146.185.241.5
   port: 52006
   uuid: 62770d79-dc4d-07d0-b01c-ea30399725aa
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (6)
+  tls: true
+  servername: max.ru
+  reality-opts:
+    public-key: 4CH3o5zOMcFNMbnwXnkAg0FFepmsc0QzhahXkUzb1ik
+    short-id: d8c6b58bcbb0c323
+- name: Server-94
   type: vless
   server: 185.241.192.111
   port: 51191
   uuid: 62770d79-dc4d-07d0-b01c-ea30399725aa
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (7)
+  tls: true
+  servername: sun6-22.userapi.com
+  reality-opts:
+    public-key: 4CH3o5zOMcFNMbnwXnkAg0FFepmsc0QzhahXkUzb1ik
+    short-id: d8c6b58bcbb0c323
+- name: Server-95
   type: vless
   server: 185.241.193.215
   port: 51191
   uuid: 62770d79-dc4d-07d0-b01c-ea30399725aa
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (8)
+  tls: true
+  servername: sun6-22.userapi.com
+  reality-opts:
+    public-key: 4CH3o5zOMcFNMbnwXnkAg0FFepmsc0QzhahXkUzb1ik
+    short-id: d8c6b58bcbb0c323#🇷🇺 Russia [*CIDR]
+- name: Server-96
   type: vless
   server: 185.241.194.190
   port: 51191
   uuid: 62770d79-dc4d-07d0-b01c-ea30399725aa
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (9)
+  tls: true
+  servername: sun6-22.userapi.com#🇷🇺 Russia [*CIDR]
+  reality-opts:
+    public-key: 4CH3o5zOMcFNMbnwXnkAg0FFepmsc0QzhahXkUzb1ik
+    short-id: d8c6b58bcbb0c323
+- name: Server-97
   type: vless
   server: 95.163.250.213
   port: 443
   uuid: 62770d79-dc4d-07d0-b01c-ea30399725aa
   network: tcp#🇷🇺 Russia [*CIDR]
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (10)
+  tls: true
+  servername: max.ru
+  reality-opts:
+    public-key: 4CH3o5zOMcFNMbnwXnkAg0FFepmsc0QzhahXkUzb1ik
+    short-id: d8c6b58bcbb0c323
+- name: Server-98
   type: vless
   server: 185.40.153.254
   port: 443
   uuid: 62770d79-dc4d-40b1-b01c-ea30399725aa
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (11)
+  tls: true
+  servername: eh.vk.com#🇷🇺 Russia [*CIDR]
+  reality-opts:
+    public-key: 4CH3o5zOMcFNMbnwXnkAg0FFepmsc0QzhahXkUzb1ik
+    short-id: d8c6b58bcbb0c323
+- name: Server-99
   type: vless
   server: 51.250.27.60
   port: 443
   uuid: 87d58e85-a4b3-4187-9fb7-6f0a73b21a6b
   network: tcp
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (12)
+  tls: true
+  servername: eh.vk.com
+  reality-opts:
+    public-key: THqHSc7VayG7tIzmF-YrYXGhnCmsyY7z4ZHU338z3lo
+    short-id: a20d3ed244c76426
+- name: Server-100
   type: vless
   server: 79.174.92.44
   port: 2083
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: grpc
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (13)
+  tls: true
+  servername: ads.x5.ru
+  reality-opts:
+    public-key: J6NuOlIq3ypdTFc1TMhDDKmF8BWPnNWZq1EkxD7K-lQ
+    short-id: 6da16b1335651b38
+  grpc-opts:
+    grpc-service-name: UpdateService
+- name: Server-101
   type: vless
   server: 79.174.92.44
   port: 2083
   uuid: 95abaefc-7861-417a-81b7-166cb788ce1a
   network: grpc
-  security: reality
-  tls: false
   udp: true
-- name: Russia CIDR (14)
+  tls: true
+  servername: ads.x5.ru
+  reality-opts:
+    public-key: J6NuOlIq3ypdTFc1TMhDDKmF8BWPnNWZq1EkxD7K-lQ
+    short-id: 6da16b1335651b38
+  grpc-opts:
+    grpc-service-name: UpdateService
+- name: Server-102
   type: vless
   server: 217.16.16.251
   port: 8443
   uuid: d63129ab-04a5-4797-8a70-84f4ab610ca9
   network: raw
-  security: reality
-  tls: false
   udp: true
+  tls: true
+  servername: eh.vk.vom
+  reality-opts:
+    public-key: bPN2gQ-96uG3DZONnduotvwViMDsUsN2XZnRkzXcMxk
+    short-id: edc87d796657fbe5
 proxy-groups:
-- name: Auto
+- name: 🚀 Auto Select
   type: url-test
   url: http://www.gstatic.com/generate_204
-  interval: 600
+  interval: 300
+  tolerance: 50
   proxies:
-  - Albania CIDR
-  - Albania CIDR (1)
-  - Finland CIDR
-  - Finland CIDR (1)
-  - Finland CIDR (2)
-  - Finland CIDR (3)
-  - Finland CIDR (4)
-  - Finland CIDR (5)
-  - Finland CIDR (6)
-  - Finland CIDR (7)
-  - Finland CIDR (8)
-  - Finland CIDR (9)
-  - Finland CIDR (10)
-  - Finland CIDR (11)
-  - Finland CIDR (12)
-  - Finland CIDR (13)
-  - Finland CIDR (14)
-  - Finland CIDR (15)
-  - Finland CIDR (16)
-  - Finland CIDR (17)
-  - Finland CIDR (18)
-  - Finland CIDR (19)
-  - Finland CIDR (20)
-  - Finland CIDR (21)
-  - Finland CIDR (22)
-  - Germany CIDR
-  - Germany CIDR (1)
-  - Germany CIDR (2)
-  - Germany CIDR (3)
-  - Germany CIDR (4)
-  - Germany CIDR (5)
-  - Germany CIDR (6)
-  - Germany CIDR (7)
-  - Germany CIDR (8)
-  - Germany CIDR (9)
-  - Germany CIDR (10)
-  - Hungary CIDR
-  - Hungary CIDR (1)
-  - Hungary CIDR (2)
-  - Hungary CIDR (3)
-  - Hungary CIDR (4)
-  - Hungary CIDR (5)
-  - Hungary CIDR (6)
-  - Hungary CIDR (7)
-  - Hungary CIDR (8)
-  - Italy CIDR
-  - Italy CIDR (1)
-  - Japan CIDR
-  - Japan CIDR (1)
-  - Latvia CIDR
-  - Latvia CIDR (1)
-  - Lithuania CIDR
-  - Poland CIDR (1)
-  - Poland CIDR (2)
-  - Poland CIDR (3)
-  - Poland CIDR (4)
-  - Poland CIDR (5)
-  - Poland CIDR (6)
-  - Poland CIDR (7)
-  - Poland CIDR (8)
-  - Poland CIDR (9)
-  - Slovakia CIDR
-  - Slovakia CIDR (1)
-  - Sweden CIDR
-  - Sweden CIDR (1)
-  - The Netherlands CIDR
-  - The Netherlands CIDR (1)
-  - The Netherlands CIDR (2)
-  - The Netherlands CIDR (3)
-  - The Netherlands CIDR (4)
-  - The Netherlands CIDR (5)
-  - The Netherlands CIDR (6)
-  - The Netherlands CIDR (7)
-  - The Netherlands CIDR (8)
-  - The Netherlands CIDR (9)
-  - The Netherlands CIDR (10)
-  - The Netherlands CIDR (11)
-  - The Netherlands CIDR (12)
-  - The Netherlands CIDR (13)
-  - Turkey CIDR
-  - Turkey CIDR (1)
-  - Turkey CIDR (2)
-  - United States CIDR
-  - United States CIDR (1)
-  - Russia CIDR
-  - Russia CIDR (1)
-  - Russia CIDR (2)
-  - Russia CIDR (3)
-  - Russia CIDR (4)
-  - Russia CIDR (5)
-  - Russia CIDR (6)
-  - Russia CIDR (7)
-  - Russia CIDR (8)
-  - Russia CIDR (9)
-  - Russia CIDR (10)
-  - Russia CIDR (11)
-  - Russia CIDR (12)
-  - Russia CIDR (13)
-  - Russia CIDR (14)
-- name: Balance
+  - Server-3
+  - Server-4
+  - Server-5
+  - Server-6
+  - Server-7
+  - Server-8
+  - Server-9
+  - Server-10
+  - Server-11
+  - Server-12
+  - Server-13
+  - Server-14
+  - Server-15
+  - Server-16
+  - Server-17
+  - Server-18
+  - Server-19
+  - Server-20
+  - Server-21
+  - Server-22
+  - Server-23
+  - Server-24
+  - Server-25
+  - Server-26
+  - Server-27
+  - Server-28
+  - Server-29
+  - Server-30
+  - Server-31
+  - Server-32
+  - Server-33
+  - Server-34
+  - Server-35
+  - Server-36
+  - Server-37
+  - Server-38
+  - Server-39
+  - Server-40
+  - Server-41
+  - Server-42
+  - Server-43
+  - Server-44
+  - Server-45
+  - Server-46
+  - Server-47
+  - Server-48
+  - Server-49
+  - Server-50
+  - Server-51
+  - Server-52
+  - Server-53
+  - Server-54
+  - Server-56
+  - Server-57
+  - Server-58
+  - Server-59
+  - Server-60
+  - Server-61
+  - Server-62
+  - Server-63
+  - Server-64
+  - Server-65
+  - Server-66
+  - Server-67
+  - Server-68
+  - Server-69
+  - Server-70
+  - Server-71
+  - Server-72
+  - Server-73
+  - Server-74
+  - Server-75
+  - Server-76
+  - Server-77
+  - Server-78
+  - Server-79
+  - Server-80
+  - Server-81
+  - Server-82
+  - Server-83
+  - Server-84
+  - Server-85
+  - Server-86
+  - Server-87
+  - Server-88
+  - Server-89
+  - Server-90
+  - Server-91
+  - Server-92
+  - Server-93
+  - Server-94
+  - Server-95
+  - Server-96
+  - Server-97
+  - Server-98
+  - Server-99
+  - Server-100
+  - Server-101
+  - Server-102
+- name: 🔗 Load Balance
   type: load-balance
+  url: http://www.gstatic.com/generate_204
+  interval: 300
   strategy: consistent-hashing
   proxies:
-  - Albania CIDR
-  - Albania CIDR (1)
-  - Finland CIDR
-  - Finland CIDR (1)
-  - Finland CIDR (2)
-  - Finland CIDR (3)
-  - Finland CIDR (4)
-  - Finland CIDR (5)
-  - Finland CIDR (6)
-  - Finland CIDR (7)
-  - Finland CIDR (8)
-  - Finland CIDR (9)
-  - Finland CIDR (10)
-  - Finland CIDR (11)
-  - Finland CIDR (12)
-  - Finland CIDR (13)
-  - Finland CIDR (14)
-  - Finland CIDR (15)
-  - Finland CIDR (16)
-  - Finland CIDR (17)
-  - Finland CIDR (18)
-  - Finland CIDR (19)
-  - Finland CIDR (20)
-  - Finland CIDR (21)
-  - Finland CIDR (22)
-  - Germany CIDR
-  - Germany CIDR (1)
-  - Germany CIDR (2)
-  - Germany CIDR (3)
-  - Germany CIDR (4)
-  - Germany CIDR (5)
-  - Germany CIDR (6)
-  - Germany CIDR (7)
-  - Germany CIDR (8)
-  - Germany CIDR (9)
-  - Germany CIDR (10)
-  - Hungary CIDR
-  - Hungary CIDR (1)
-  - Hungary CIDR (2)
-  - Hungary CIDR (3)
-  - Hungary CIDR (4)
-  - Hungary CIDR (5)
-  - Hungary CIDR (6)
-  - Hungary CIDR (7)
-  - Hungary CIDR (8)
-  - Italy CIDR
-  - Italy CIDR (1)
-  - Japan CIDR
-  - Japan CIDR (1)
-  - Latvia CIDR
-  - Latvia CIDR (1)
-  - Lithuania CIDR
-  - Poland CIDR (1)
-  - Poland CIDR (2)
-  - Poland CIDR (3)
-  - Poland CIDR (4)
-  - Poland CIDR (5)
-  - Poland CIDR (6)
-  - Poland CIDR (7)
-  - Poland CIDR (8)
-  - Poland CIDR (9)
-  - Slovakia CIDR
-  - Slovakia CIDR (1)
-  - Sweden CIDR
-  - Sweden CIDR (1)
-  - The Netherlands CIDR
-  - The Netherlands CIDR (1)
-  - The Netherlands CIDR (2)
-  - The Netherlands CIDR (3)
-  - The Netherlands CIDR (4)
-  - The Netherlands CIDR (5)
-  - The Netherlands CIDR (6)
-  - The Netherlands CIDR (7)
-  - The Netherlands CIDR (8)
-  - The Netherlands CIDR (9)
-  - The Netherlands CIDR (10)
-  - The Netherlands CIDR (11)
-  - The Netherlands CIDR (12)
-  - The Netherlands CIDR (13)
-  - Turkey CIDR
-  - Turkey CIDR (1)
-  - Turkey CIDR (2)
-  - United States CIDR
-  - United States CIDR (1)
-  - Russia CIDR
-  - Russia CIDR (1)
-  - Russia CIDR (2)
-  - Russia CIDR (3)
-  - Russia CIDR (4)
-  - Russia CIDR (5)
-  - Russia CIDR (6)
-  - Russia CIDR (7)
-  - Russia CIDR (8)
-  - Russia CIDR (9)
-  - Russia CIDR (10)
-  - Russia CIDR (11)
-  - Russia CIDR (12)
-  - Russia CIDR (13)
-  - Russia CIDR (14)
-- name: Fallback
-  type: fallback
-  url: https://www.gstatic.com/generate_204
-  interval: 300
-  proxies:
-  - Albania CIDR
-  - Albania CIDR (1)
-  - Finland CIDR
-  - Finland CIDR (1)
-  - Finland CIDR (2)
-  - Finland CIDR (3)
-  - Finland CIDR (4)
-  - Finland CIDR (5)
-  - Finland CIDR (6)
-  - Finland CIDR (7)
-  - Finland CIDR (8)
-  - Finland CIDR (9)
-  - Finland CIDR (10)
-  - Finland CIDR (11)
-  - Finland CIDR (12)
-  - Finland CIDR (13)
-  - Finland CIDR (14)
-  - Finland CIDR (15)
-  - Finland CIDR (16)
-  - Finland CIDR (17)
-  - Finland CIDR (18)
-  - Finland CIDR (19)
-  - Finland CIDR (20)
-  - Finland CIDR (21)
-  - Finland CIDR (22)
-  - Germany CIDR
-  - Germany CIDR (1)
-  - Germany CIDR (2)
-  - Germany CIDR (3)
-  - Germany CIDR (4)
-  - Germany CIDR (5)
-  - Germany CIDR (6)
-  - Germany CIDR (7)
-  - Germany CIDR (8)
-  - Germany CIDR (9)
-  - Germany CIDR (10)
-  - Hungary CIDR
-  - Hungary CIDR (1)
-  - Hungary CIDR (2)
-  - Hungary CIDR (3)
-  - Hungary CIDR (4)
-  - Hungary CIDR (5)
-  - Hungary CIDR (6)
-  - Hungary CIDR (7)
-  - Hungary CIDR (8)
-  - Italy CIDR
-  - Italy CIDR (1)
-  - Japan CIDR
-  - Japan CIDR (1)
-  - Latvia CIDR
-  - Latvia CIDR (1)
-  - Lithuania CIDR
-  - Poland CIDR (1)
-  - Poland CIDR (2)
-  - Poland CIDR (3)
-  - Poland CIDR (4)
-  - Poland CIDR (5)
-  - Poland CIDR (6)
-  - Poland CIDR (7)
-  - Poland CIDR (8)
-  - Poland CIDR (9)
-  - Slovakia CIDR
-  - Slovakia CIDR (1)
-  - Sweden CIDR
-  - Sweden CIDR (1)
-  - The Netherlands CIDR
-  - The Netherlands CIDR (1)
-  - The Netherlands CIDR (2)
-  - The Netherlands CIDR (3)
-  - The Netherlands CIDR (4)
-  - The Netherlands CIDR (5)
-  - The Netherlands CIDR (6)
-  - The Netherlands CIDR (7)
-  - The Netherlands CIDR (8)
-  - The Netherlands CIDR (9)
-  - The Netherlands CIDR (10)
-  - The Netherlands CIDR (11)
-  - The Netherlands CIDR (12)
-  - The Netherlands CIDR (13)
-  - Turkey CIDR
-  - Turkey CIDR (1)
-  - Turkey CIDR (2)
-  - United States CIDR
-  - United States CIDR (1)
-  - Russia CIDR
-  - Russia CIDR (1)
-  - Russia CIDR (2)
-  - Russia CIDR (3)
-  - Russia CIDR (4)
-  - Russia CIDR (5)
-  - Russia CIDR (6)
-  - Russia CIDR (7)
-  - Russia CIDR (8)
-  - Russia CIDR (9)
-  - Russia CIDR (10)
-  - Russia CIDR (11)
-  - Russia CIDR (12)
-  - Russia CIDR (13)
-  - Russia CIDR (14)
-- name: Global ©️
+  - Server-3
+  - Server-4
+  - Server-5
+  - Server-6
+  - Server-7
+  - Server-8
+  - Server-9
+  - Server-10
+  - Server-11
+  - Server-12
+  - Server-13
+  - Server-14
+  - Server-15
+  - Server-16
+  - Server-17
+  - Server-18
+  - Server-19
+  - Server-20
+  - Server-21
+  - Server-22
+  - Server-23
+  - Server-24
+  - Server-25
+  - Server-26
+  - Server-27
+  - Server-28
+  - Server-29
+  - Server-30
+  - Server-31
+  - Server-32
+  - Server-33
+  - Server-34
+  - Server-35
+  - Server-36
+  - Server-37
+  - Server-38
+  - Server-39
+  - Server-40
+  - Server-41
+  - Server-42
+  - Server-43
+  - Server-44
+  - Server-45
+  - Server-46
+  - Server-47
+  - Server-48
+  - Server-49
+  - Server-50
+  - Server-51
+  - Server-52
+  - Server-53
+  - Server-54
+  - Server-56
+  - Server-57
+  - Server-58
+  - Server-59
+  - Server-60
+  - Server-61
+  - Server-62
+  - Server-63
+  - Server-64
+  - Server-65
+  - Server-66
+  - Server-67
+  - Server-68
+  - Server-69
+  - Server-70
+  - Server-71
+  - Server-72
+  - Server-73
+  - Server-74
+  - Server-75
+  - Server-76
+  - Server-77
+  - Server-78
+  - Server-79
+  - Server-80
+  - Server-81
+  - Server-82
+  - Server-83
+  - Server-84
+  - Server-85
+  - Server-86
+  - Server-87
+  - Server-88
+  - Server-89
+  - Server-90
+  - Server-91
+  - Server-92
+  - Server-93
+  - Server-94
+  - Server-95
+  - Server-96
+  - Server-97
+  - Server-98
+  - Server-99
+  - Server-100
+  - Server-101
+  - Server-102
+- name: 🌐 Global
   type: select
   proxies:
-  - Balance
-  - Auto
-  - Fallback
+  - 🚀 Auto Select
+  - 🔗 Load Balance
+  - Server-3
+  - Server-4
+  - Server-5
+  - Server-6
+  - Server-7
+  - Server-8
+  - Server-9
+  - Server-10
+  - Server-11
+  - Server-12
+  - Server-13
+  - Server-14
+  - Server-15
+  - Server-16
+  - Server-17
+  - Server-18
+  - Server-19
+  - Server-20
+  - Server-21
+  - Server-22
+  - Server-23
+  - Server-24
+  - Server-25
+  - Server-26
+  - Server-27
+  - Server-28
+  - Server-29
+  - Server-30
+  - Server-31
+  - Server-32
+  - Server-33
+  - Server-34
+  - Server-35
+  - Server-36
+  - Server-37
+  - Server-38
+  - Server-39
+  - Server-40
+  - Server-41
+  - Server-42
+  - Server-43
+  - Server-44
+  - Server-45
+  - Server-46
+  - Server-47
+  - Server-48
+  - Server-49
+  - Server-50
+  - Server-51
+  - Server-52
+  - Server-53
+  - Server-54
+  - Server-56
+  - Server-57
+  - Server-58
+  - Server-59
+  - Server-60
+  - Server-61
+  - Server-62
+  - Server-63
+  - Server-64
+  - Server-65
+  - Server-66
+  - Server-67
+  - Server-68
+  - Server-69
+  - Server-70
+  - Server-71
+  - Server-72
+  - Server-73
+  - Server-74
+  - Server-75
+  - Server-76
+  - Server-77
+  - Server-78
+  - Server-79
+  - Server-80
+  - Server-81
+  - Server-82
+  - Server-83
+  - Server-84
+  - Server-85
+  - Server-86
+  - Server-87
+  - Server-88
+  - Server-89
+  - Server-90
+  - Server-91
+  - Server-92
+  - Server-93
+  - Server-94
+  - Server-95
+  - Server-96
+  - Server-97
+  - Server-98
+  - Server-99
+  - Server-100
+  - Server-101
+  - Server-102
 rules:
-- DOMAIN-KEYWORD,kick,DIRECT
-- DOMAIN-SUFFIX,t.me,DIRECT
+- DOMAIN-SUFFIX,openai.com,🌐 Global
+- DOMAIN-SUFFIX,google.com,🌐 Global
+- DOMAIN-SUFFIX,youtube.com,🌐 Global
+- DOMAIN-SUFFIX,github.com,🌐 Global
+- DOMAIN-SUFFIX,twitter.com,🌐 Global
 - DOMAIN-SUFFIX,telegram.org,DIRECT
-- DOMAIN-SUFFIX,telegram.me,DIRECT
-- MATCH,Global ©️
+- DOMAIN-SUFFIX,t.me,DIRECT
+- DOMAIN-SUFFIX,linkedin.com,🌐 Global
+- DOMAIN-KEYWORD,spotify,🌐 Global
+- DOMAIN-KEYWORD,netflix,🌐 Global
+- IP-CIDR,192.168.0.0/16,DIRECT
+- IP-CIDR,10.0.0.0/8,DIRECT
+- IP-CIDR,172.16.0.0/12,DIRECT
+- GEOIP,CN,DIRECT
+- MATCH,🌐 Global
