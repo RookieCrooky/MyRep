@@ -366,7 +366,6 @@ jobs:
                   - DOMAIN-SUFFIX,rutracker.org,Global
                   - DOMAIN-SUFFIX,rutracker.cc,Global
                   - DOMAIN-SUFFIX,habr.com,Global
-                  - DOMAIN-SUFFIX,4pda.to,Global
                   - DOMAIN-SUFFIX,ifconfig.co,Global
                   - DOMAIN-SUFFIX,desmos.com,Global
                   - PROCESS-NAME,Discord.exe,Global
