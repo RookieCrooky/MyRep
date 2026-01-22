@@ -31,85 +31,34 @@ jobs:
         import yaml, base64, urllib.parse, re, json, datetime
         from collections import defaultdict
         
-        def clean_line(line):
-            """Очистка строки от комментариев, дат и мусора"""
-            # Удаляем всё после # если это не часть ссылки
-            if '://' in line:
-                # Если ссылка уже найдена, берем только до первого пробела после ссылки
-                parts = line.split()
-                for part in parts:
-                    if part.startswith(('vless://', 'vmess://', 'ss://', 'trojan://')):
-                        return part.strip()
-            
-            # Удаляем мусорные строки с датами и пояснениями
-            garbage_patterns = [
-                r'^Date/Time:.*',
-                r'^For more info.*',
-                r'^https?://.*github\.com.*',
-                r'^\*\*\*.*',
-                r'^---.*',
-                r'^===.*',
-                r'^Last update:.*',
-                r'^Updated:.*',
-                r'^Moscow.*',
-                r'^UTC.*',
-            ]
-            
-            for pattern in garbage_patterns:
-                if re.match(pattern, line, re.IGNORECASE):
-                    return None
-            
-            # Если строка содержит ссылку, но есть мусор вокруг
-            if '://' in line:
-                # Ищем первую ссылку в строке
-                match = re.search(r'(vless|vmess|ss|trojan)://[^\s]+', line)
-                if match:
-                    return match.group(0)
-            
-            return line.strip()
-        
         def decode_base64(data):
-            """Декодирование base64 с добавлением padding"""
             try:
-                # Удаляем пробелы и переводы строк
                 data = data.replace(' ', '').replace('\n', '').replace('\r', '')
-                
                 missing_padding = len(data) % 4
                 if missing_padding:
                     data += '=' * (4 - missing_padding)
-                
                 return base64.b64decode(data).decode('utf-8', errors='ignore')
-            except Exception as e:
-                print(f"Ошибка декодирования base64: {e}")
+            except:
                 return None
         
         def parse_vless(uri):
-            """Парсинг VLESS URI"""
             try:
-                # Очистка URI - удаляем всё после пробела или спецсимволов
-                uri = uri.split()[0] if ' ' in uri else uri
                 uri = uri.strip()
-                
                 if not uri.startswith('vless://'):
                     return None
                 
-                # Удаляем префикс
                 uri = uri[8:]
-                
-                # Разделяем UUID и остальное
                 if '@' not in uri:
                     return None
                 
                 uuid_part, rest = uri.split('@', 1)
                 uuid = uuid_part.split(':')[0] if ':' in uuid_part else uuid_part
                 
-                # Разделяем сервер:порт и параметры
                 if '?' in rest:
                     server_port, params = rest.split('?', 1)
                 else:
                     server_port, params = rest, ''
                 
-                # Очистка порта - удаляем слеши и мусор
                 server_port = server_port.strip()
                 if '/' in server_port:
                     server_port = server_port.split('/')[0]
@@ -119,19 +68,14 @@ jobs:
                 
                 server, port = server_port.split(':', 1)
                 server = server.strip()
-                port = port.strip()
-                
-                # Очистка порта от мусора
                 port = re.sub(r'[^0-9]', '', port)
+                
                 if not port:
                     return None
                 
                 port = int(port)
-                
-                # Парсим параметры
                 params_dict = urllib.parse.parse_qs(params) if params else {}
                 
-                # Базовый прокси
                 proxy = {
                     "name": "",
                     "type": "vless",
@@ -144,7 +88,6 @@ jobs:
                     "tls": False
                 }
                 
-                # Обработка TLS
                 security = params_dict.get('security', [''])[0]
                 if security in ['tls', 'reality', 'xtls']:
                     proxy['tls'] = True
@@ -152,7 +95,6 @@ jobs:
                     if sni and sni[0]:
                         proxy['servername'] = sni[0]
                 
-                # Обработка WS
                 if proxy['network'] == 'ws':
                     proxy['ws-opts'] = {
                         "path": params_dict.get('path', ['/'])[0],
@@ -162,9 +104,8 @@ jobs:
                     if host and host[0]:
                         proxy['ws-opts']["headers"]["Host"] = host[0]
                 
-                # Обработка gRPC
                 elif proxy['network'] == 'grpc':
-                    service_name = params_dict.get('serviceName', [''])[0] or params_dict.get('serviceName', [''])[0]
+                    service_name = params_dict.get('serviceName', [''])[0]
                     proxy['grpc-opts'] = {
                         "grpc-service-name": service_name if service_name else "grpc"
                     }
@@ -172,26 +113,20 @@ jobs:
                 return proxy
                 
             except Exception as e:
-                print(f"Ошибка парсинга VLESS: {e} | URI: {uri[:50]}...")
+                print(f"Ошибка парсинга VLESS: {e}")
                 return None
         
         def parse_vmess(uri):
-            """Парсинг VMESS URI"""
             try:
-                # Очистка URI
-                uri = uri.split()[0] if ' ' in uri else uri
                 uri = uri.strip()
-                
                 if not uri.startswith('vmess://'):
                     return None
                 
-                # Декодируем base64
                 encoded = uri[8:]
                 decoded = decode_base64(encoded)
                 if not decoded:
                     return None
                 
-                # Парсим JSON
                 config = json.loads(decoded)
                 
                 proxy = {
@@ -207,16 +142,13 @@ jobs:
                     "tls": False
                 }
                 
-                # TLS
                 if config.get('tls') == 'tls':
                     proxy['tls'] = True
                     proxy['servername'] = config.get('sni', config.get('host', ''))
                 
-                # Network type
                 network = config.get('net', 'tcp')
                 proxy['network'] = network
                 
-                # WS options
                 if network == 'ws':
                     proxy['ws-opts'] = {
                         "path": config.get('path', '/'),
@@ -226,7 +158,6 @@ jobs:
                     if host:
                         proxy['ws-opts']['headers']['Host'] = host
                 
-                # HTTP/2
                 elif network == 'h2':
                     proxy['h2-opts'] = {
                         "path": config.get('path', '/'),
@@ -240,32 +171,23 @@ jobs:
                 return None
         
         def parse_ss(uri):
-            """Парсинг Shadowsocks URI"""
             try:
-                # Очистка URI
-                uri = uri.split()[0] if ' ' in uri else uri
                 uri = uri.strip()
-                
                 if not uri.startswith('ss://'):
                     return None
                 
-                # Извлекаем имя если есть
                 name = ''
                 if '#' in uri:
                     uri, name_part = uri.split('#', 1)
                     name = urllib.parse.unquote(name_part)
                 
-                # Удаляем префикс
                 uri = uri[5:]
                 
-                # Проверяем формат
                 if '@' in uri:
-                    # Формат: method:password@server:port
                     method_password, server_port = uri.split('@', 1)
                     method, password = method_password.split(':', 1)
                     server, port = server_port.split(':', 1)
                 else:
-                    # Base64 формат
                     decoded = decode_base64(uri)
                     if not decoded:
                         return None
@@ -277,12 +199,10 @@ jobs:
                     method, password = method_password.split(':', 1)
                     server, port = server_port.split(':', 1)
                 
-                # Очистка порта
                 port = re.sub(r'[^0-9]', '', port)
                 if not port:
                     return None
                 
-                # Поддерживаемые шифры
                 supported_ciphers = [
                     'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
                     'chacha20-ietf-poly1305', 'xchacha20-ietf-poly1305',
@@ -308,38 +228,29 @@ jobs:
                 return None
         
         def parse_trojan(uri):
-            """Парсинг Trojan URI"""
             try:
-                # Очистка URI
-                uri = uri.split()[0] if ' ' in uri else uri
                 uri = uri.strip()
-                
                 if not uri.startswith('trojan://'):
                     return None
                 
-                # Извлекаем имя если есть
                 name = ''
                 if '#' in uri:
                     uri, name_part = uri.split('#', 1)
                     name = urllib.parse.unquote(name_part)
                 
-                # Удаляем префикс
                 uri = uri[9:]
                 
-                # Разделяем пароль и остальное
                 if '@' not in uri:
                     return None
                 
                 password, rest = uri.split('@', 1)
                 
-                # Разделяем сервер:порт и параметры
                 if '?' in rest:
                     server_port, params = rest.split('?', 1)
                     params_dict = urllib.parse.parse_qs(params)
                 else:
                     server_port, params_dict = rest, {}
                 
-                # Очистка порта
                 if ':' not in server_port:
                     return None
                 
@@ -359,11 +270,9 @@ jobs:
                     "sni": params_dict.get('sni', [''])[0] if params_dict.get('sni') else ""
                 }
                 
-                # Network
                 network = params_dict.get('type', ['tcp'])[0]
                 proxy['network'] = network
                 
-                # WS
                 if network == 'ws':
                     proxy['ws-opts'] = {
                         "path": params_dict.get('path', ['/'])[0],
@@ -380,102 +289,129 @@ jobs:
                 return None
         
         def main():
-            # Чтение и очистка файла
-            with open("servers.txt", "r", encoding="utf-8") as f:
-                raw_lines = f.readlines()
+            print("Чтение файла servers.txt...")
+            try:
+                with open("servers.txt", "r", encoding="utf-8") as f:
+                    lines = [line.strip() for line in f if line.strip()]
+            except:
+                print("Ошибка чтения файла")
+                return
             
-            print(f"Прочитано {len(raw_lines)} строк")
+            print(f"Найдено {len(lines)} строк")
             
-            # Очистка строк
-            clean_lines = []
-            for line in raw_lines:
-                line = line.strip()
-                if not line:
-                    continue
-                
-                cleaned = clean_line(line)
-                if cleaned:
-                    clean_lines.append(cleaned)
-            
-            print(f"После очистки осталось {len(clean_lines)} строк")
-            
-            # Парсинг прокси
             proxies = []
             name_counter = defaultdict(int)
+            stats = {"vless": 0, "vmess": 0, "ss": 0, "trojan": 0, "failed": 0}
             
-            for i, line in enumerate(clean_lines):
-                if not line or len(line) < 10:
+            for i, line in enumerate(lines):
+                if len(line) < 10:
                     continue
                 
                 proxy = None
+                proxy_type = ""
                 
                 try:
                     if line.startswith('vless://'):
                         proxy = parse_vless(line)
+                        proxy_type = "vless"
                     elif line.startswith('vmess://'):
                         proxy = parse_vmess(line)
+                        proxy_type = "vmess"
                     elif line.startswith('ss://'):
                         proxy = parse_ss(line)
+                        proxy_type = "ss"
                     elif line.startswith('trojan://'):
                         proxy = parse_trojan(line)
+                        proxy_type = "trojan"
                     else:
-                        # Пропускаем нераспознанные строки
                         continue
                 except Exception as e:
-                    print(f"Критическая ошибка при парсинге строки {i+1}: {e}")
+                    stats["failed"] += 1
                     continue
                 
-                if not proxy:
-                    continue
-                
-                # Генерация имени
-                name = proxy.get('name', '')
-                if not name or name.isspace():
-                    # Генерируем имя на основе типа и сервера
-                    server = proxy.get('server', '')
-                    proxy_type = proxy.get('type', 'proxy')
-                    name = f"{proxy_type}-{server[:15]}"
-                
-                # Очистка имени
-                name = re.sub(r'[^\w\s\-\.]', '', name).strip()
-                if not name:
-                    name = f"Proxy-{i+1}"
-                
-                # Уникальное имя
-                base_name = name[:30]  # Ограничиваем длину
-                name_counter[base_name] += 1
-                if name_counter[base_name] > 1:
-                    name = f"{base_name}-{name_counter[base_name]}"
-                
-                proxy['name'] = name
-                
-                # Валидация
-                if not all(key in proxy for key in ['server', 'port', 'type']):
-                    print(f"Пропущен прокси {name}: отсутствуют обязательные поля")
-                    continue
-                
-                if not (1 <= proxy['port'] <= 65535):
-                    print(f"Пропущен прокси {name}: неверный порт {proxy['port']}")
-                    continue
-                
-                proxies.append(proxy)
-                print(f"✓ Добавлен прокси: {name}")
+                if proxy:
+                    stats[proxy_type] += 1
+                    
+                    # Создаем имя
+                    name = proxy.get('name', '')
+                    if not name or name.isspace():
+                        server = proxy.get('server', 'unknown')[:15]
+                        name = f"{proxy_type}-{server}"
+                    
+                    name = re.sub(r'[^\w\s\-\.]', '', name).strip()
+                    if not name:
+                        name = f"{proxy_type}-{i+1}"
+                    
+                    base_name = name[:30]
+                    name_counter[base_name] += 1
+                    if name_counter[base_name] > 1:
+                        name = f"{base_name}-{name_counter[base_name]}"
+                    
+                    proxy['name'] = name
+                    
+                    # Валидация
+                    if not all(key in proxy for key in ['server', 'port', 'type']):
+                        stats["failed"] += 1
+                        continue
+                    
+                    if not (1 <= proxy['port'] <= 65535):
+                        stats["failed"] += 1
+                        continue
+                    
+                    proxies.append(proxy)
+                    print(f"  ✓ {name}")
+                else:
+                    stats["failed"] += 1
             
-            print(f"\nУспешно создано {len(proxies)} прокси")
+            print(f"\nСтатистика:")
+            print(f"  VLESS: {stats['vless']}")
+            print(f"  VMESS: {stats['vmess']}")
+            print(f"  Shadowsocks: {stats['ss']}")
+            print(f"  Trojan: {stats['trojan']}")
+            print(f"  Не удалось распарсить: {stats['failed']}")
+            print(f"  Всего валидных: {len(proxies)}")
             
             if not proxies:
-                print("Ошибка: не найдено ни одного валидного прокси")
-                # Создаем заглушку чтобы workflow не падал
+                print("\n⚠️  ВНИМАНИЕ: Не найдено ни одного валидного прокси!")
+                print("Создаю минимальную конфигурацию...")
                 config = {
                     "port": 7890,
                     "socks-port": 7891,
                     "mode": "rule",
+                    "log-level": "info",
                     "proxies": [],
-                    "proxy-groups": [],
-                    "rules": ["MATCH,DIRECT"]
+                    "proxy-groups": [
+                        {
+                            "name": "Global",
+                            "type": "select",
+                            "proxies": ["DIRECT"]
+                        }
+                    ],
+                    "rules": [
+                        "GEOSITE,youtube,Global",
+                        "GEOSITE,openai,Global",
+                        "DOMAIN-SUFFIX,minesweeper.online,Global",
+                        "DOMAIN-SUFFIX,rutracker.org,Global",
+                        "DOMAIN-SUFFIX,rutracker.cc,Global",
+                        "DOMAIN-SUFFIX,habr.com,Global",
+                        "DOMAIN-SUFFIX,4pda.to,Global",
+                        "DOMAIN-SUFFIX,ifconfig.co,Global",
+                        "DOMAIN-SUFFIX,desmos.com,Global",
+                        "PROCESS-NAME,Discord.exe,Global",
+                        "DOMAIN-SUFFIX,discord.com,Global",
+                        "DOMAIN-SUFFIX,discordapp.com,Global",
+                        "DOMAIN-SUFFIX,discord.gg,Global",
+                        "DOMAIN-SUFFIX,discordmedia.net,Global",
+                        "DOMAIN-SUFFIX,discordapp.net,Global",
+                        "DOMAIN-SUFFIX,airspy.com,Global",
+                        "DOMAIN-SUFFIX,huggingface.co,Global",
+                        "MATCH,DIRECT"
+                    ]
                 }
             else:
-                # Создаем конфигурацию Clash
+                # Получаем имена всех прокси для групп
+                proxy_names = [p["name"] for p in proxies]
+                
                 config = {
                     "port": 7890,
                     "socks-port": 7891,
@@ -499,45 +435,59 @@ jobs:
                     
                     "proxies": proxies,
                     
+                    # Группы как вы просили
                     "proxy-groups": [
                         {
-                            "name": "🚀 Авто-выбор",
+                            "name": "UrlTest",
                             "type": "url-test",
-                            "url": "http://www.gstatic.com/generate_204",
-                            "interval": 600,
-                            "tolerance": 150,
+                            "url": "http://cp.cloudflare.com/generate_204",
+                            "interval": 300,
+                            "tolerance": 50,
                             "timeout": 5000,
-                            "proxies": [p["name"] for p in proxies]
+                            "proxies": proxy_names
                         },
                         {
-                            "name": "🔧 Ручной выбор",
-                            "type": "select",
-                            "proxies": ["🚀 Авто-выбор"] + [p["name"] for p in proxies]
-                        },
-                        {
-                            "name": "📊 Балансировка",
+                            "name": "Balance",
                             "type": "load-balance",
-                            "url": "http://www.gstatic.com/generate_204",
-                            "interval": 600,
+                            "url": "http://cp.cloudflare.com/generate_204",
+                            "interval": 300,
                             "strategy": "round-robin",
-                            "proxies": [p["name"] for p in proxies]
+                            "proxies": proxy_names
+                        },
+                        {
+                            "name": "Fallback",
+                            "type": "fallback",
+                            "url": "http://cp.cloudflare.com/generate_204",
+                            "interval": 300,
+                            "proxies": proxy_names
+                        },
+                        {
+                            "name": "Global",
+                            "type": "select",
+                            "proxies": ["UrlTest", "Balance", "Fallback"] + proxy_names
                         }
                     ],
                     
-                    # Упрощенные правила без GEOSITE
+                    # Правила как вы просили
                     "rules": [
-                        "DOMAIN-SUFFIX,openai.com,🔧 Ручной выбор",
-                        "DOMAIN-SUFFIX,google.com,🔧 Ручной выбор",
-                        "DOMAIN-SUFFIX,youtube.com,🔧 Ручной выбор",
-                        "DOMAIN-SUFFIX,github.com,🔧 Ручной выбор",
-                        "DOMAIN-SUFFIX,twitter.com,🔧 Ручной выбор",
-                        "DOMAIN-SUFFIX,telegram.org,DIRECT",
-                        "DOMAIN-SUFFIX,t.me,DIRECT",
-                        "IP-CIDR,192.168.0.0/16,DIRECT",
-                        "IP-CIDR,10.0.0.0/8,DIRECT",
-                        "IP-CIDR,172.16.0.0/12,DIRECT",
-                        "GEOIP,CN,DIRECT",
-                        "MATCH,🔧 Ручной выбор"
+                        "GEOSITE,youtube,Global",
+                        "GEOSITE,openai,Global",
+                        "DOMAIN-SUFFIX,minesweeper.online,Global",
+                        "DOMAIN-SUFFIX,rutracker.org,Global", 
+                        "DOMAIN-SUFFIX,rutracker.cc,Global",
+                        "DOMAIN-SUFFIX,habr.com,Global",
+                        "DOMAIN-SUFFIX,4pda.to,Global",
+                        "DOMAIN-SUFFIX,ifconfig.co,Global",
+                        "DOMAIN-SUFFIX,desmos.com,Global",
+                        "PROCESS-NAME,Discord.exe,Global",
+                        "DOMAIN-SUFFIX,discord.com,Global",
+                        "DOMAIN-SUFFIX,discordapp.com,Global",
+                        "DOMAIN-SUFFIX,discord.gg,Global",
+                        "DOMAIN-SUFFIX,discordmedia.net,Global",
+                        "DOMAIN-SUFFIX,discordapp.net,Global",
+                        "DOMAIN-SUFFIX,airspy.com,Global",
+                        "DOMAIN-SUFFIX,huggingface.co,Global",
+                        "MATCH,DIRECT"
                     ]
                 }
             
@@ -545,18 +495,48 @@ jobs:
             with open("servers.yml", "w", encoding="utf-8") as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False, indent=2)
             
-            print(f"\n✅ Конфигурация создана успешно!")
-            print(f"📁 Файл: servers.yml")
-            print(f"🔗 Прокси: {len(proxies)}")
+            print(f"\n✅ Конфигурация сохранена в servers.yml")
             
-            # Создаем лог
-            with open("conversion.log", "w", encoding="utf-8") as f:
-                f.write(f"Конвертация завершена: {datetime.datetime.now()}\n")
-                f.write(f"Обработано строк: {len(clean_lines)}\n")
-                f.write(f"Создано прокси: {len(proxies)}\n")
-                f.write("\nСписок прокси:\n")
-                for proxy in proxies:
-                    f.write(f"- {proxy['name']} ({proxy['type']}://{proxy['server']}:{proxy['port']})\n")
+            # Создаем README с информацией
+            with open("README.md", "w", encoding="utf-8") as f:
+                f.write(f"""# Clash Configuration Auto-Updater
+        
+        **Последнее обновление:** {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+        
+        ## Статистика
+        - Всего прокси: {len(proxies)}
+        - VLESS: {stats['vless']}
+        - VMESS: {stats['vmess']}
+        - Shadowsocks: {stats['ss']}
+        - Trojan: {stats['trojan']}
+        
+        ## Группы прокси
+        1. **UrlTest** - автоматический выбор лучшего прокси
+        2. **Balance** - балансировка нагрузки между прокси
+        3. **Fallback** - автоматическое переключение при падении
+        4. **Global** - ручной выбор любого прокси или группы
+        
+        ## Правила
+        Трафик следующих сервисов направляется через группу **Global**:
+        - YouTube
+        - OpenAI
+        - Discord
+        - Rutracker
+        - Habr
+        - 4PDA
+        - И другие указанные домены
+        
+        ## Использование
+        1. Скачайте файл `servers.yml`
+        2. Импортируйте в Clash Verge/Meta/For Windows
+        3. Выберите группу "Global" для выбора прокси
+        
+        ## Автоматическое обновление
+        Конфигурация обновляется автоматически каждые 6 часов.
+        
+        ## Источник
+        Прокси берутся из: [zieng2/wl](https://github.com/zieng2/wl)
+        """)
         
         if __name__ == "__main__":
             main()
