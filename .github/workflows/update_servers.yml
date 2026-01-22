@@ -2,11 +2,14 @@ name: Update and Convert servers.txt to Clash YAML
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # запуск раз в день (UTC)
+    - cron: '0 */6 * * *'  # запуск каждые 6 часов
   workflow_dispatch:
+  push:
+    paths:
+      - 'servers.txt'
 
 permissions:
-  contents: write  # Добавляем разрешения на запись
+  contents: write
 
 jobs:
   update-servers:
@@ -14,20 +17,97 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
-    
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y python3 python3-pip
-        pip install pyyaml
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
     - name: Download servers.txt
       run: |
-        curl -L -o servers.txt https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt
+        echo "Скачивание servers.txt..."
+        curl -L -o servers.txt "https://raw.githubusercontent.com/zieng2/wl/refs/heads/main/vless_lite.txt" || true
+        
+        if [ ! -f servers.txt ] || [ ! -s servers.txt ]; then
+          echo "Файл не скачался, создаем пустой..."
+          echo "# Empty servers list" > servers.txt
+        fi
+        
+        echo "Размер файла: $(wc -l servers.txt | awk '{print $1}') строк"
 
-    - name: Convert servers.txt → servers.yml
+    - name: Clean servers.txt file
       run: |
+        echo "Очистка файла от мусора..."
+        cat > clean_script.py << 'EOF'
+        import re
+        
+        with open('servers.txt', 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+        
+        print(f'Исходное количество строк: {len(lines)}')
+        
+        clean_lines = []
+        for i, line in enumerate(lines):
+            line = line.strip()
+            if not line:
+                continue
+            
+            # Удаляем строки с датами, временем и пояснениями
+            if re.match(r'^(Date/Time|For more info|Last update|Updated|Moscow|UTC|\*\*\*|---|===)', line, re.IGNORECASE):
+                continue
+            
+            # Удаляем GitHub и другие информационные ссылки
+            if re.search(r'github\.com|telegram\.me|t\.me/@', line, re.IGNORECASE):
+                if not any(proto in line for proto in ['vless://', 'vmess://', 'ss://', 'trojan://']):
+                    continue
+            
+            # Если строка содержит ссылку, извлекаем только её
+            if '://' in line:
+                match = re.search(r'(vless|vmess|ss|trojan)://[^\s<>]+', line)
+                if match:
+                    clean_line = match.group(0)
+                    # Исправляем битые ссылки
+                    if '443/' in clean_line and clean_line.endswith('/'):
+                        clean_line = clean_line.rstrip('/')
+                    clean_lines.append(clean_line)
+                    continue
+            
+            # Оставляем только если это похоже на ссылку
+            if any(proto in line for proto in ['vless://', 'vmess://', 'ss://', 'trojan://']):
+                # Исправляем битые порты
+                if ':443/' in line:
+                    line = line.replace(':443/', ':443')
+                clean_lines.append(line)
+        
+        # Сохраняем очищенный файл
+        with open('servers_clean.txt', 'w', encoding='utf-8') as f:
+            f.write('\n'.join(clean_lines))
+        
+        print(f'После очистки: {len(clean_lines)} строк')
+        EOF
+        
+                python3 clean_script.py
+                
+                # Заменяем оригинальный файл очищенным
+                if [ -f servers_clean.txt ]; then
+                  mv servers_clean.txt servers.txt
+                  echo "Файл очищен"
+                else
+                  echo "Ошибка: файл servers_clean.txt не создан"
+                fi
+                
+                rm -f clean_script.py
+        
+            - name: Install Python dependencies
+              run: |
+                pip install pyyaml
+        
+            - name: Create Python converter script
+              run: |
+                cat > converter.py << 'EOF'
         import yaml, base64, urllib.parse, re, json, datetime
         from collections import defaultdict
         
@@ -294,7 +374,7 @@ jobs:
                 with open("servers.txt", "r", encoding="utf-8") as f:
                     lines = [line.strip() for line in f if line.strip()]
             except:
-                print("Ошибка чтения файла")
+                print("Ошибка чтения файда")
                 return
             
             print(f"Найдено {len(lines)} строк")
@@ -541,12 +621,90 @@ jobs:
         if __name__ == "__main__":
             main()
         EOF
-
-   
-    - name: Commit and Push changes
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add servers.txt servers.yml
-        git diff-index --quiet HEAD || git commit -m "Update servers.txt and generate servers.yml"
-        git push  # Просто git push, без URL
+        
+            - name: Convert servers.txt → servers.yml
+              run: |
+                echo "Конвертация в Clash формат..."
+                python3 converter.py
+                
+                echo "Проверяем результат..."
+                if [ -f servers.yml ]; then
+                  echo "✅ Файл servers.yml создан успешно"
+                  echo "Количество строк: $(wc -l servers.yml | awk '{print $1}')"
+                else
+                  echo "❌ Ошибка: файл servers.yml не создан"
+                  exit 1
+                fi
+        
+            - name: Create summary file
+              run: |
+                echo "Создание файла с информацией..."
+                cat > summary_script.py << 'EOF'
+        import yaml
+        print("# Статистика конвертации")
+        print("")
+        try:
+            with open('servers.yml', 'r', encoding='utf-8') as f:
+                config = yaml.safe_load(f)
+            if 'proxies' in config:
+                print(f"Всего прокси: {len(config['proxies'])}")
+                types = {}
+                for proxy in config['proxies']:
+                    t = proxy.get('type', 'unknown')
+                    types[t] = types.get(t, 0) + 1
+                for t, count in types.items():
+                    print(f"{t}: {count}")
+            else:
+                print("Нет прокси в конфиге")
+            
+            print("")
+            print("Группы:")
+            if 'proxy-groups' in config:
+                for group in config['proxy-groups']:
+                    print(f"- {group.get('name', 'unknown')} ({group.get('type', 'unknown')})")
+        except Exception as e:
+            print(f"Ошибка чтения конфига: {e}")
+        EOF
+        
+                python3 summary_script.py > info.txt
+                
+                echo "" >> info.txt
+                echo "Дата генерации: $(date)" >> info.txt
+                
+                rm -f summary_script.py
+        
+            - name: Commit and push changes
+              run: |
+                git config user.name "github-actions[bot]"
+                git config user.email "github-actions[bot]@users.noreply.github.com"
+                
+                # Добавляем все созданные файлы
+                git add servers.txt servers.yml README.md info.txt 2>/dev/null || true
+                
+                # Проверяем есть ли изменения
+                if git diff --cached --quiet; then
+                  echo "Нет изменений для коммита"
+                else
+                  git commit -m "Auto-update: $(date +'%Y-%m-%d %H:%M UTC')
+                  
+                  • Обновлен servers.txt
+                  • Сгенерирован servers.yml
+                  • Обновлена документация"
+                  git push
+                fi
+        
+            - name: Clean up
+              run: |
+                # Удаляем временные файлы
+                rm -f converter.py clean_script.py summary_script.py 2>/dev/null || true
+        
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: clash-config
+                path: |
+                  servers.yml
+                  servers.txt
+          README.md
+          info.txt
+        retention-days: 7
