@@ -354,27 +354,30 @@ jobs:
                         "proxies": [p["name"] for p in proxies]
                     },
                     {
-                        "name": "🌐 Global",
+                        "name": "🌐 Global ©️",
                         "type": "select",
                         "proxies": ["🚀 Auto Select", "🔗 Load Balance"] + [p["name"] for p in proxies]
                     }
                 ],
                 "rules": [
-                    "DOMAIN-SUFFIX,openai.com,🌐 Global",
-                    "DOMAIN-SUFFIX,google.com,🌐 Global",
-                    "DOMAIN-SUFFIX,youtube.com,🌐 Global",
-                    "DOMAIN-SUFFIX,github.com,🌐 Global",
-                    "DOMAIN-SUFFIX,twitter.com,🌐 Global",
-                    "DOMAIN-SUFFIX,telegram.org,DIRECT",
-                    "DOMAIN-SUFFIX,t.me,DIRECT",
-                    "DOMAIN-SUFFIX,linkedin.com,🌐 Global",
-                    "DOMAIN-KEYWORD,spotify,🌐 Global",
-                    "DOMAIN-KEYWORD,netflix,🌐 Global",
-                    "IP-CIDR,192.168.0.0/16,DIRECT",
-                    "IP-CIDR,10.0.0.0/8,DIRECT",
-                    "IP-CIDR,172.16.0.0/12,DIRECT",
-                    "GEOIP,CN,DIRECT",
-                    "MATCH,🌐 Global"
+                  - GEOSITE,youtube,Global ©️
+                  - GEOSITE,openai,Global ©️
+                  - DOMAIN-SUFFIX,minesweeper.online,Global ©️
+                  - DOMAIN-SUFFIX,rutracker.org,Global ©️
+                  - DOMAIN-SUFFIX,rutracker.cc,Global ©️
+                  - DOMAIN-SUFFIX,habr.com,Global ©️
+                  - DOMAIN-SUFFIX,4pda.to,Global ©️
+                  - DOMAIN-SUFFIX,ifconfig.co,Global ©️
+                  - DOMAIN-SUFFIX,desmos.com,Global ©️
+                  - PROCESS-NAME,Discord.exe,Global ©️
+                  - DOMAIN-SUFFIX,discord.com,Global ©️
+                  - DOMAIN-SUFFIX,discordapp.com,Global ©️
+                  - DOMAIN-SUFFIX,discord.gg,Global ©️
+                  - DOMAIN-SUFFIX,discordmedia.net,Global ©️
+                  - DOMAIN-SUFFIX,discordapp.net,Global ©️
+                  - DOMAIN-SUFFIX,airspy.com,Global ©️
+                  - DOMAIN-SUFFIX,huggingface.co,Global ©️
+                  - MATCH,DIRECT
                 ]
             }
             
