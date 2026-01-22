@@ -60,10 +60,7 @@ jobs:
                 continue
             
             # Удаляем GitHub и другие информационные ссылки
-            if re.search(r'github\.com|telegram\.me|t\.me/@', line, re.IGNORECASE):
-                if not any(proto in line for proto in ['vless://', 'vmess://', 'ss://', 'trojan://']):
-                    continue
-            
+
             # Если строка содержит ссылку, извлекаем только её
             if '://' in line:
                 match = re.search(r'(vless|vmess|ss|trojan)://[^\s<>]+', line)
